@@ -30,6 +30,10 @@ Duckstation
 
 mGBA
 
+Xemu
+
+Xenia
+
 
 
 # What it does (PC)
