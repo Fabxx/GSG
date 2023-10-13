@@ -46,7 +46,7 @@ once you defined your paths inside the script (everything is documented and expl
 `./gen.sh`
 
 
-# Integrating with steam rom manager
+# Integrating with steam rom manager (PC)
 
 We can run these generated scripts from steam with steam rom manager. To do so you have to create a parser with these settings:
 
