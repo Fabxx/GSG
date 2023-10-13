@@ -23,7 +23,7 @@ mGBA
 
 
 
-# What it does
+# What it does (PC)
 
 -Allows you to configure the script with a text editor
 
@@ -33,7 +33,7 @@ mGBA
 
 -Recursively scans the game folders to find the exe to run and creates the script with the commands in it.
 
-# Initial Setup
+# Initial Setup (PC)
 
 First of all there's a thing to take care about. The script scans recursively for `.exe` extension file name,
 so if you have other exes in the same directory of the game executable, rename the other ".exe" into ".EXE" or
