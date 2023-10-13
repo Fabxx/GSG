@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Put here your prefix path, if you have more, just define a new variable and change the path. if you want to use you defailt .wine prefix (not recommended)
+# Put here your prefix path, if you have more, just define a new variable and change the path. if you want to use you default .wine prefix (not recommended)
 
 # don't use any of the defined variables.
 
