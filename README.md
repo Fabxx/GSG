@@ -5,7 +5,7 @@ The purpose is to allow users to run games just with Wine and winetricks package
 
 # Adding game setups for PC games
 
-If a game setup that you know is missing in the `game setups.txt` file, please create an issue with the appropriate labels.
+If a game setup that you know is missing in the `game setups.txt` file inside PC folder, please create an issue with the appropriate labels.
 
 
 # Currently Supported Platforms:
