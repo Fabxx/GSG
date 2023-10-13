@@ -27,6 +27,8 @@ Xenia (.xex | .iso | .zar)
 
 MelonDS (.nds | .dsi | .ids | .app)
 
+Citra (.cia | .3ds)
+
 PPSSPP (.iso)
 
 Duckstation (.bin | .iso | .img)  
