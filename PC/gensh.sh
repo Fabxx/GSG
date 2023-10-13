@@ -6,9 +6,9 @@
 
 prefix="/path/to/prefix"
 
-# Define your path that contains the games. Each game must have it's own folder. * is for recursive search.
+# Define your path that contains the games. Each game must have it's own folder.  DO NOT PUT / AT THE END OF THE STRING, because that's in the for for the recursive search.
 
-path_games="/path/to/games/*"
+path_games="/path/to/games"
 
 # Define DLL Overrides if needed.
 
@@ -37,13 +37,16 @@ SCCT_SKIP_VIDEO="-nointro"
 
 # Generate shell files, first go into the main game dir, then add  WINEPREFIX command with path, specify WINEARCH (if needed), add overrides and append data.
 
-for folder in $path_games; do cd "$folder";
+# NOTE: /* is to recursively search in the path. I did not put * in path_Games because if that path has spaces, the quotes will fail to bypass the space with the * symbol
+# and won't recognize the path. Instead, even if a path has a space, i can recursively scan here outside of the quotes.
+
+for folder in "$path_games"/*; do cd "$folder";
 
 echo $(pwd); #show if goes into the folders successfully.
 
 echo -e cd \"$(pwd)\" > start.sh
 
-echo -e >> avvia.sh
+echo -e >> start.sh
 
 # Detect if you reached the game that requires overrides, a different prefix or a specified WINEARCH, if not fallback to the default command.
 # Here are some examples between the simple command and the modified command.
@@ -76,14 +79,14 @@ fi
 
 # Example of adding arguments with cmr 2005
 
-if [ "$(pwd)" == "/media/user/disk/Colin McRae Rally 2005" ]; then echo -n "" wine "$(ls *.exe)" "$CMR2005" >> start.sh
+if [ "$(pwd)" == "/media/user/disk/Colin McRae Rally 2005" ]; then echo -n "" wine \""$(ls *.exe)"\" "$CMR2005" >> start.sh
 
 # example of subfolder path for the exe.
-elif [ "$(pwd)" == "/media/user/disk/Borderlands" ]; then echo -n "" wine "$(ls Binaries/*.exe)" >> start.sh
+elif [ "$(pwd)" == "/media/user/disk/Borderlands" ]; then echo -n "" wine \""$(ls Binaries/*.exe)"\" >> start.sh
 
-# if the exe isn't in subdirs fallback to default string.
+# if the exe isn't in subdirs and doesn't require any arguments fallback to default string.
 
-else echo "" wine "$(ls *.exe)" >> start.sh 
+else echo "" wine \""$(ls *.exe)"\" >> start.sh 
 
 fi
 
