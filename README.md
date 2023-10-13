@@ -1,6 +1,7 @@
 # LinuxGSG
 GSG Is a game script  generator. Allows you to automatically create sh files to run games.
 
+# PC games Specifications
 In this script are also documented the `WINEDLLOVERRIDES` and the `winetricks` packages to use for a specific case.
 
 I've also included a game setup document that indicates for each tested game what packages are required and how to setup the games to work.
