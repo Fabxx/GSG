@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Define your path that contains the games. Each game must have it's own folder. DO NOT PUT / AT THE END OF THE STRING, because that's in the for for the recursive search.
-path_games="/media/fabx/517454AE65063897/WD 2TB Dati/Giochi/Xbox360/0extracted"
+path_games="/path/to/xbox360/games"
 
-path_prefix="$HOME/.wine"
+path_prefix="/path/to/prefix"
 
-path_executable="/media/fabx/517454AE65063897/WD 2TB Dati/Giochi/emulatori/xenia/xenia_canary.exe"
+path_executable="/path/to/xenia_canary.exe"
 
 # Define game arguments
 
