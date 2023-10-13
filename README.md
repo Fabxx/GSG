@@ -68,7 +68,8 @@ command line arguments: "${filePath}"
 
 User's glob: ${title}/start.sh
 
-For portaits itis recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder, not in subfolders.
+For portaits it is recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder
+not in subfolders.
 
 Local portraits image: /path/to/games/${title}/*@(.jpg)
 ```
@@ -76,6 +77,6 @@ Local portraits image: /path/to/games/${title}/*@(.jpg)
 
 Run the parses and it will detect all the "start.sh" created for each game folder, and it will associate the covers we made.
 
-You can duplicate this parser and change te category and title name, since now everything uses a `sh` file as a base to run the games, emulators ecc.
+You can duplicate this parser and change the category and title name, since now everything uses a `sh` file as a base to run the games, emulators ecc,
 
 You won't have to make specific configurations for each executable, the arguments are also included in the generated sh files.
