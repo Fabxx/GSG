@@ -5,6 +5,24 @@ In this script are also documented the `WINEDLLOVERRIDES` and the `winetricks` p
 
 I've also included a game setup document that indicates for each tested game what packages are required and how to setup the games to work.
 
+# Currently Supported Platforms:
+
+PC games
+
+# Planned support to generate scripts with:
+
+PCSX2
+
+PPSSPP
+
+Yuzu/Ryujinx
+
+Duckstation
+
+mGBA
+
+
+
 # What it does
 
 -Allows you to configure the script with a text editor
