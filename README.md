@@ -40,3 +40,38 @@ You can tweak the scripts how you want to add/remove variables, for example to a
 
 This will generate a `start.sh` in each game folder to allow you to run the games with a single execution instead of manually
 searching for the file, write the commands and run it.
+
+# Integrating with steam rom manager
+
+We can run these generated scripts from steam with steam rom manager. To do so you have to create a parser with these settings:
+
+```
+Parser type: glob
+
+Config title: put name here
+
+Steam directory: usually /home/user/.steam/root
+
+User Accounts: ${Steam Username}
+
+Steam category: Category name
+
+ROMs directory: /path/to/your/games
+
+Executable: /usr/bin/bash
+
+command line arguments: "${filePath}"
+
+User's glob: ${title}/start.sh
+
+For portaits itis recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder, not in subfolders.
+
+Local portraits image: /path/to/games/${title}/*@(.jpg)
+```
+
+
+Run the parses and it will detect all the "start.sh" created for each game folder, and it will associate the covers we made.
+
+You can duplicate this parser and change te category and title name, since now everything uses a `sh` file as a base to run the games, emulators ecc.
+
+You won't have to make specific configurations for each executable, the arguments are also included in the generated sh files.
