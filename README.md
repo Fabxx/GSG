@@ -1,44 +1,42 @@
 # LinuxGSG
 GSG Is a game script  generator. Allows you to automatically create sh files to run games.
 
-The purpose is to allow users to run games just with Wine and winetricks packages, no proton, lutris or whatever.
+The purpose is to allow users to run games just with Wine and winetricks packages, no proton, lutris or whatever in a straightfoward way, and also generate
+scripts that will allow users to launch games on emulators immediatly with the needed arguments.
+
+this does NOT configure automatically the emulators, you have to do that on your own.
 
 # Adding game setups for PC games
 
 If a game setup that you know is missing in the `game setups.txt` file inside PC folder, please create an issue with the appropriate labels.
 
 
-# Currently Supported Platforms:
+# Currently Supported extension detection:
+```
+PC (.exe)
 
-PC games
+PCSX2 (.iso)
 
-# Planned support to generate scripts with:
+mGBA (.gbc | .gba | .gb)
 
-PCSX2
+Xemu (.iso)
 
-PPSSPP
+Xenia (.xex | .iso | .zar)
 
-Yuzu/Ryujinx
+MelonDS (.nds | .dsi | .ids | .app)
 
-Duckstation
+PPSSPP (.iso)
 
-mGBA
+Duckstation (.bin | .iso | .img)  
 
-Xemu
+Yuzu/Ryujinx (.xci | .nsp)
+```
 
-Xenia
+# How to use
 
+All you have to do is configure the paths indicated in the scripts folder, the script will take care of the rest.
 
-# What it does (PC)
+You can tweak the scripts how you want to add/remove variables, for example to add more prefixes, more paths, DLL overrides ecc.
 
--Allows you to configure the script with a text editor
-
--Allows you to choose a dedicated prefix or default wine prefix
-
--Allows to automatically apply the WINEDLLOVERRIDES, WINEARCH and wine commmand arguments if you specify it.
-
--Recursively scans the game folders to find the exe to run and creates the script with the commands in it.
-
-# What it does (Emulators)
-
--Generates a runner with the emulator executable, with arguments and paths to game files.
+This will generate a `start.sh` in each game folder to allow you to run the games with a single execution instead of manually
+searching for the file, write the commands and run it.
