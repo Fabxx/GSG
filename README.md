@@ -10,6 +10,8 @@ this does NOT configure automatically the emulators, you have to do that on your
 
 If a game setup that you know is missing in the `game setups.txt` file inside PC folder, please create an issue with the appropriate labels.
 
+I will add the wine configuration and if available, the necessary DLL overrides in the script for the missing game.
+
 
 # Currently Supported extension detection:
 ```
