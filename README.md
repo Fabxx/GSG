@@ -92,3 +92,8 @@ Run the parser and it will detect all the "start.sh" created for each game folde
 You can duplicate this parser and change the category, title name and ROM's path since now everything uses a `sh` file as a base to run the games, emulators ecc,
 
 You won't have to make specific configurations for each executable, the arguments are also included in the generated sh files.
+
+
+# Special Thanks
+
+SSUPII - Dialog Implementation https://github.com/SSUPII
