@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TODO: Avoid prefix creation in exFAT, FAT32, NTFS
+# TODO: check if disk is NTFS, exFAT or FAT32. do NOT ALLOW a prefix creation in these.
 
 # Emulator Arguments
 
@@ -478,8 +478,6 @@ blurParser()
 
 ZenityUI()
 {
-	#zenity --info --text="NOTE: Games MUST Be organized in individual folders to generate sh scripts for each of them"
-
 	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
 	1 Citra   	   "Nintendo 3DS Emulator" \
 	2 melonDS 	   "Nintendo DS Emulator" \
@@ -566,40 +564,10 @@ ZenityUI()
 	fi
 }
 
-:<<COMMENT incomplete, will be finished later.
-DialogUI()
-{
-	dialog --clear --title "Console selection" --menu "Select a Parser" 17 50 10 \
-	1 Citra\ Nintendo\ 3DS\ Emulator \
-	2 melonDS\ Nintendo\ DS\ Emulator \
-	3 mGBA\ Gameboy\ Advance\ Emulator \
-	4 Xemu\ Original\ Xbox\ Emulator \
-	5 Xenia\ Xbox\ 360\ Emulator \
-	6 Ppsspp\ PSP\ Emulator \
-	7 Pcsx2\ PS2\ Emulator \
-	8 Duckstation\ PS1\ Emulator \
-	9 Yuzu/Ryujinx\ Nintendo\ Switch\ Emulator \
-	10 PC\ Windows\ .exe\ games 2> /tmp/parser_ID;
-
-	dialogRetVal=$?
-
-	parser_ID=$(cat /tmp/parser_ID)
-
-	clear
-
-	if [ "$dialogRetVal" == 1 ]; then exit
-
-	fi
-}
-COMMENT
-
 # Detect available UI selection interfaces. type returns 0 if command is available, 1 if not.
 
 type zenity >> /dev/null
 zenityPresent=$?
-
-type dialog >> /dev/null
-dialogPresent=$?
 
 type wine >> /dev/null
 winePresent=$?
@@ -621,14 +589,10 @@ exit
 
 elif [ $zenityPresent == 0 ]; then ZenityUI
 
-elif [ $dialogPresent == 0 ]; then DialogUI
-
-else echo "No supported dialog APIs found. Exiting."; exit;
+else echo "Zenity must be installed in your system to display UI."; exit;
 
 fi
 
-
-# check if disk is NTFS, exFAT or FAT32. do NOT ALLOW a prefix in these.
 
 case $parser_ID in
 
