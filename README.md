@@ -54,7 +54,8 @@ All you have to do is configure the requested paths.
 This will generate a `start.sh` in each game folder to allow you to run the games with a single execution instead of manually
 searching for the file, write the commands and run it, it also applies arguments if known.
 
-You can tweak the wine parser to add more specific game cases for the script generation
+You can tweak the wine parser to add more specific game cases for the script generation.
+only the WINE parser can beed tweaks based on your game folder names with the comparisons.
 
 # Integrating with steam rom manager
 
