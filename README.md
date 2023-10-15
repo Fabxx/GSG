@@ -38,15 +38,22 @@ Duckstation (.cue | .iso | .img)
 Yuzu/Ryujinx (.xci | .nsp)
 ```
 # Depencies
-winetricks for wine packages, Zenity or Dialog for UI. (recommended zenity for now)
+`winetricks`
+
+`wine` 
+
+`Zenity` for UI.
 
 # Initial Setup
 - First of all, setup your games by following the Game Setups txt document. If a game is not available please report it
   and if possible, add documentation about what it needs to run in wine via github issues.
+
 - Games must be in their individual folders, regrouped in a subfolder.
+
 - if more than one `.exe` file is in the same dir, rename the non necessary ones into `.EXE` or remove the extension. the wine parser
   parses recursively for *.exe files.
-- Create an empty folder in a EXT4 partition if you have to use an extra prefix other than the default one, so you can select it from the UI.
+
+- Create an empty folder in a EXT partition if you have to use an extra prefix other than the default one, so you can select it from the UI.
 
 # How to use
 
@@ -97,7 +104,7 @@ You won't have to make specific configurations for each executable, the argument
 
 # Special Thanks
 
-SSUPII - Dialog Implementation https://github.com/SSUPII
+SSUPII - Bug Fixes and testing https://github.com/SSUPII
 
 # Video Showcase
 
