@@ -1,8 +1,8 @@
 # LinuxGSG
 GSG Is a game script  generator. Allows you to automatically create sh files to run games.
 
-The purpose is to allow users to run games just with Wine and winetricks packages, no proton, lutris or whatever in a straightfoward way, and also generate
-scripts that will allow users to launch games on emulators immediatly with the needed arguments.
+The purpose is to allow users to run games and emulators through automatically generated runners, with arguments and command lines integrated in the 
+generation, without the need of extra software and thinkering.
 
 this does NOT configure automatically the emulators, you have to do that on your own.
 
