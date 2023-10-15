@@ -46,6 +46,7 @@ winetricks for wine packages, Zenity or Dialog for UI. (recommended zenity for n
 - Games must be in their individual folders, regrouped in a subfolder.
 - if more than one `.exe` file is in the same dir, rename the non necessary ones into `.EXE` or remove the extension. the wine parser
   parses recursively for *.exe files.
+- Create an empty folder in a EXT4 partition if you have to use an extra prefix other than the default one, so you can select it from the UI.
 
 # How to use
 
@@ -97,3 +98,9 @@ You won't have to make specific configurations for each executable, the argument
 # Special Thanks
 
 SSUPII - Dialog Implementation https://github.com/SSUPII
+
+# Video Showcase
+
+https://github.com/Fabxx/LinuxGSG/assets/30447649/12bc2350-f6fa-4307-b97f-fc00818280e5
+
+
