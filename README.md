@@ -41,7 +41,8 @@ Yuzu/Ryujinx (.xci | .nsp)
 winetricks for wine packages, Zenity or Dialog for UI. (recommended zenity for now)
 
 # Initial Setup
-
+- First of all, setup your games by following the Game Setups txt document. If a game is not available please report it
+  and if possible, add documentation about what it needs to run in wine via github issues.
 - Games must be in their individual folders, regrouped in a subfolder.
 - if more than one `.exe` file is in the same dir, rename the non necessary ones into `.EXE` or remove the extension. the wine parser
   parses recursively for *.exe files.
