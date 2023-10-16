@@ -67,8 +67,7 @@ Rpcs3 (.BIN)
 
 # How to use
 
-I provided a UI with Zenity (dialog support coming soon)
-All you have to do is configure the requested paths.
+I provided a UI with Zenity, all you have to do is configure the requested paths.
 
 This will generate a `start.sh` in each game folder to allow you to run the games with a single execution instead of manually
 searching for the file, write the commands and run it, it also applies arguments if known.
