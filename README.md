@@ -45,7 +45,7 @@ Yuzu/Ryujinx (.xci | .nsp)
 `Zenity` for UI.
 
 # Initial Setup
-- First of all, setup your games by following the Game Setups txt document. If a game is not available please report it
+- (PC games only) First of all, setup your games by following the Game Setups txt document. If a game is not available please report it
   and if possible, add documentation about what it needs to run in wine via github issues.
 
 - Games must be in their individual folders, regrouped in a subfolder.
