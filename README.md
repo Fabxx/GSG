@@ -25,7 +25,7 @@ mGBA (.gbc | .gba | .gb)
 
 Xemu (.iso)
 
-Xenia (.xex | .iso | .zar)
+Xenia (.xex | .iso)
 
 MelonDS (.nds | .dsi | .ids | .app)
 
@@ -36,6 +36,16 @@ PPSSPP (.iso)
 Duckstation (.cue | .iso | .img)  
 
 Yuzu/Ryujinx (.xci | .nsp)
+
+Cemu (.wum | .wux)
+
+Mupen64 (.z64 | .v64 | *.n64)
+
+Snes9x (.smc | .sfc)
+
+Dolphin (.wbfs | .wad | .iso | .gcz | .rvz | .dol | .elf)
+
+Rpcs3 (.BIN)
 ```
 # Depencies
 `winetricks`
