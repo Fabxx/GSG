@@ -13,6 +13,7 @@ mgba_args="-f"
 dolphin_args="--config=Dolphin.Display.Fullscreen=True"
 mupen_args="--fullscreen"
 cemu_args="-f -g"
+rpcs3_args="--no-gui"
 
 # Wine DLL Overrides for PC games
 
@@ -73,7 +74,7 @@ Parser()
 		;;
 
 		4) #rpcs3
-		echo -n \""$path_executable"\" "" \""$(ls USRDIR/*.BIN)"\" >> start.sh
+		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls USRDIR/*.BIN)"\" >> start.sh
 		esac
 		;;
 
@@ -82,7 +83,7 @@ Parser()
 		case $parser_ID in
 	
 		1) #citra
-		echo -n \""$path_executable"\" "" \""$(ls *.wud *.iso)"\" >> start.sh
+		echo -n \""$path_executable"\" "" \""$(ls *.3ds *.cia)"\" >> start.sh
 		;;
 		
 		2) #melonDS
