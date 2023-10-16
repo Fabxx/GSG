@@ -118,17 +118,5 @@ SSUPII - Bug Fixes and testing https://github.com/SSUPII
 
 # Video Showcase
 
-https://github.com/Fabxx/LinuxGSG/assets/30447649/12bc2350-f6fa-4307-b97f-fc00818280e5
+https://github.com/Fabxx/LinuxGSG/assets/30447649/558a5332-dc02-49d2-a72d-9f0cbb118f71
 
-
-# Screenshots
-
-![immagine](https://github.com/Fabxx/LinuxGSG/assets/30447649/b56fc58e-b9be-430c-97c6-b3f1020e8170)
-
-![immagine](https://github.com/Fabxx/LinuxGSG/assets/30447649/28e6c28b-4f63-4541-b63b-5c1ee0f165e4)
-
-![immagine](https://github.com/Fabxx/LinuxGSG/assets/30447649/453b3900-1b52-4399-b231-0096c15ee8bd)
-
-![immagine](https://github.com/Fabxx/LinuxGSG/assets/30447649/c77b17fe-dcfc-4d7f-b764-ca0109c16d9e)
-
-![immagine](https://github.com/Fabxx/LinuxGSG/assets/30447649/4be2de5f-7f73-4981-8225-0aecda3a0d2a)
