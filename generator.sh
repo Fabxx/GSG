@@ -62,7 +62,7 @@ Parser()
 		case $parser_ID in
 
 		1) #duckstation
-		echo -n \""$path_executable"\" "" \""$(ls *.cue *.iso *.img)"\" >> start.sh
+		echo -n \""$path_executable"\" "" \""$(ls *.cue *.iso *.img *.ecm)"\" >> start.sh
 		;;
 		
 		2) #pcsx2
