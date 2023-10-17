@@ -65,7 +65,7 @@ Rpcs3 (.BIN)
 - if there are more files with the same extension in the same directory, rename the extension of the unnecessary files based on the parser to use, then run the parser.
   so for example if you have to parse for .exe, rename all the other exes that you don't need into .EXE, or just remove the extension.
 
-- If you have to use an extra prefix other than the default one, create an empty folder in a EXT partition, so you can select it from the UI when needed.
+- Extra prefixes for specific games MUST be created in disks  with `EXT` filesystem, or else the program won't allow you to use that folder as a wine prefix.
 
 # How to use
 
@@ -74,7 +74,7 @@ I provided a UI with Zenity, all you have to do is configure the requested paths
 This will generate a `start.sh` in each game folder to allow you to run the games with a single execution instead of manually
 searching for the file, write the commands and run it, it also applies arguments if known.
 
-You can tweak the wine parser to add more specific game cases for the script generation.
+You can tweak the wine parser to add more specific game cases for the script generation (or suggest some that i will add in updates).
 only the WINE parser can need tweaks based on your game folder names with the comparisons.
 
 # Integrating with steam rom manager
@@ -117,7 +117,16 @@ You won't have to make specific configurations for each executable, the argument
 
 SSUPII - Bug Fixes and testing https://github.com/SSUPII
 
-# Video Showcase
+# Wine parser showcase
 
-https://github.com/Fabxx/LinuxGSG/assets/30447649/558a5332-dc02-49d2-a72d-9f0cbb118f71
+https://github.com/Fabxx/LinuxGSG/assets/30447649/dd7a43d9-ba87-416d-b4fe-de14ffc36728
+
+# Emulator parser showcase
+
+https://github.com/Fabxx/LinuxGSG/assets/30447649/eebbe82e-6bbd-4179-9a5f-26593f45bb1d
+
+# Steam Rom Manager Integration showcase
+
+https://github.com/Fabxx/LinuxGSG/assets/30447649/47bbbafa-69f7-4d5d-a70c-1f0a95b97a13
+
 
