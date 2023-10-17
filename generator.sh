@@ -411,6 +411,8 @@ ZenityUI()
 	fi 
 
 	fi
+
+ 	Parser
 }
 
 # Detect available UI selection interfaces. type returns 0 if command is available, 1 if not.
@@ -442,8 +444,3 @@ else echo "Zenity must be installed in your system to display UI."
 exit
 
 fi
-
-Parser
-
-
-
