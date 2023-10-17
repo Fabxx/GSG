@@ -74,7 +74,7 @@ Parser()
 		;;
 
 		4) #rpcs3
-		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls USRDIR/*.BIN)"\" >> start.sh
+		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/*.BIN)"\" >> start.sh
 		esac
 		;;
 
