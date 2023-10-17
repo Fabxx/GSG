@@ -27,6 +27,8 @@ Xemu (.iso)
 
 Xenia (.xex | .iso)
 
+Cxbx-Reloaded (.xbe)
+
 MelonDS (.nds | .dsi | .ids | .app)
 
 Citra (.cia | .3ds)
