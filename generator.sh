@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# TODO: check if disk is NTFS, exFAT or FAT32. do NOT ALLOW a prefix creation in these.
-
-# TODO: add missing arguments for emulators
-
 # Emulator Arguments
 
 xemu_args="-full-screen -dvd_path"
@@ -74,7 +70,7 @@ Parser()
 		;;
 
 		4) #rpcs3
-		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/*.BIN)"\" >> start.sh
+		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls USRDIR/*.BIN)"\" >> start.sh
 		esac
 		;;
 
@@ -179,6 +175,79 @@ Parser()
 		elif [ "$(pwd)" == "$path_games/DiRT Showdown" ]; then 
 		
 			echo -n WINEDLLOVERRIDES=\""$DIRT_2_3_SH_OVERRIDE"\" >> start.sh 
+
+		elif [ "$(pwd)" == "$path_games/Blur" ]; then
+
+			zenity --info --text="Specific game Blur detected, please choose a dedicated prefix folder for this game"
+
+			blurPrefix=" "
+
+			while [ "$blurPrefix" == " " ]
+			do
+				blurPrefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
+				if [ $? == 1 ]; then ZenityUI
+				fi
+
+				partitionType=$(stat -f -c %T "$blurPrefix")
+
+				if [[ "$partitionType" != *"ext"* ]]; then
+
+				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
+				blurPrefix=" "
+				fi
+			done
+
+			WINEPREFIX="$blurPrefix" winetricks -q vcrun2019 dxvk1030
+			echo -n WINEPREFIX=\""$blurPrefix"\" "" >> start.sh
+		
+		elif [ "$(pwd)" == "$path_games/Saints Row 2" ]; then
+			
+			zenity --info --text="Specific game Saints Row 2 detected, choose a dedicated prefix folder for this game"
+
+			sr2Prefix=" "
+
+			while [ "$sr2Prefix" == " " ]
+			do
+				sr2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
+				if [ $? == 1 ]; then ZenityUI
+				fi
+
+				partitionType=$(stat -f -c %T "$sr2Prefix")
+
+				if [[ "$partitionType" != *"ext"* ]]; then
+
+				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
+				sr2Prefix=" "
+				fi
+			done
+
+			WINEPREFIX="$sr2Prefix" winetricks -q vcrun2019 dxvk xact
+			echo -n WINEPREFIX=\""$sr2Prefix"\" "" >> start.sh
+		
+		elif [ "$(pwd)" == "$path_games/Test Drive Unlimited 2" ]; then
+			
+			zenity --info --text="Specific game Test Drive Unlimited 2 detected, choose a dedicated prefix folder for this game"
+
+			tdu2Prefix=" "
+
+			while [ "$tdu2Prefix" == " " ]
+			do
+				tdu2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
+				if [ $? == 1 ]; then ZenityUI
+				fi
+
+				partitionType=$(stat -f -c %T "$tdu2Prefix")
+
+				if [[ "$partitionType" != *"ext"* ]]; then
+
+				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
+				tdu2Prefix=" "
+				fi
+			done
+
+			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks -q dotnet40 dxvk1103 ie7 dinput8 directplay
+			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 "" >> start.sh
+			
 		fi
 
 		# reach the exe located in subdirs or add arguments for some specific games. Here is a list of the games i've encountered so far.
@@ -231,37 +300,7 @@ Parser()
 
 		fi
 		;;
-		
-		2) #Blur
-		if [ "$(pwd)" == "$path_games/Blur" ]; then
 
-		WINEPREFIX=\""$blurPrefix"\" winetricks -q vcrun2019 dxvk1030
-
-		echo -n WINEPREFIX=\""$blurPrefix"\" >> start.sh
-
-		fi
-		;;
-		
-		3) #saints row 2
-		if [ "$(pwd)" == "$path_games/Saints Row 2" ]; then
-
-		WINEPREFIX=\""$sr2Prefix"\" winetricks xact
-
-		echo -n WINEPREFIX=\""$sr2Prefix"\" wine "$(ls *.exe)" >> start.sh
-
-		fi
-
-		;;
-		4) #Test Drive Unlimited 2
-		if [ "$(pwd)" == "$path_games/Test Drive Unlimited 2" ]; then
-
-		WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 winetricks -q dotnet40 dxvk1103 ie7 dinput8 directplay
-
-		echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 wine "$(ls *.exe)" >> start.sh 
-		
-		fi
-		;;
-		
 		esac
 		;;
 	
@@ -273,7 +312,6 @@ Parser()
    done;
 
    zenity --info --text="Script generation complete"
-
    ZenityUI
 }
 
@@ -328,10 +366,7 @@ ZenityUI()
 	elif [ $parserList == 4 ]; then
 
 	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
-	1 Wine 	   		 				"Windows .exe games (default prefix)" \
-    2 Blur   	     				"custom prefix" \
-	3 "Saints Row 2" 				"custom prefix" \
-	4 "Test Drive Unlimited 2" 		"custom prefix" )
+	1 Wine 	   		 				"Windows .exe games (default prefix)" \ )
 
 	if [ $? == 1 ]; then ZenityUI;
 	fi
@@ -352,55 +387,20 @@ ZenityUI()
 
 	fi
 
-	#On windows games section, check if to use default wine prefix or a specific prefix
-	if [ $parserList == 4 && $parser_ID == 1 ]; then 
+	#Both wine and xenia canary use default prefix. Else use emulator dialogs
+	if [[ $parserList == 4 && $parser_ID == 1 ]] || [[ $parserList == 3 && $parser_ID == 2 ]]; then
 
-	zenity --info --text="Using default wine prefix, initializing with wineboot."
-
-	wineboot
-
-	zenity --info --text="installing vcrun2019, dxvk and vkd3d in default prefix"
-
-	winetricks -q vcrun2019 dxvk vkd3d
-
-	elif [ $parserList == 4 && $parser_ID == 2 ]; then
-
-	zenity --info --text="Select the prefix folder to use for Blur"
-	blurPrefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-	if [ $? == 1 ]; then ZenityUI
-	fi
-
-	elif [ $parserList == 4 && $parser_ID == 3 ]; then
-
-	zenity --info --text="Select the prefix folder to use for Saints Row 2"
-	sr2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-	if [ $? == 1 ]; then ZenityUI
-	fi
-
-	elif [ $parserList == 4 && $parser_ID == 4 ]; then
-
-	zenity --info --text="Select the prefix folder to use for Test Drive Unlimited 2"
-	tdu2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-	if [ $? == 1 ]; then ZenityUI
-	fi
-
-	# We use xenia canary windows build for now, which requires wine default prefix.
-	elif [ $parserList == 3 && $parser_ID == 2 ]; then
-
-	zenity --info --text="Using default wine prefix, initializing with wineboot."
+	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
 
 	wineboot
-
-	zenity --info --text="installing vcrun2019, dxvk and vkd3d in default prefix"
-
 	winetricks -q vcrun2019 dxvk vkd3d
+
+	else
+
+	echo $parserList
+	echo $parser_ID
 
 	zenity --info --text="Select the Emulator Executable"
-
-	path_executable=$(zenity --title="Emulator Selection" --file-selection)
-
-	# Other emulators don't require wine, since using native linux builds.
-	else zenity --info --text="Select the Emulator Executable"
 	
 	path_executable=$(zenity --title="Emulator Selection" --file-selection)
 
