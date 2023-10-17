@@ -62,9 +62,10 @@ Rpcs3 (.BIN)
 
 - Games must be in their individual folders, regrouped in a subfolder.
 
-- if there are more files with the same extension in the same directory (multiple .exe, .BIN ecc), rename the extension of the unnecessary files, then run the parser.
+- if there are more files with the same extension in the same directory, rename the extension of the unnecessary files based on the parser to use, then run the parser.
+  so for example if you have to parse for .exe, rename all the other exes that you don't need into .EXE, or just remove the extension.
 
-- Create an empty folder in a EXT partition if you have to use an extra prefix other than the default one, so you can select it from the UI.
+- If you have to use an extra prefix other than the default one, create an empty folder in a EXT partition, so you can select it from the UI when needed.
 
 # How to use
 
@@ -74,7 +75,7 @@ This will generate a `start.sh` in each game folder to allow you to run the game
 searching for the file, write the commands and run it, it also applies arguments if known.
 
 You can tweak the wine parser to add more specific game cases for the script generation.
-only the WINE parser can beed tweaks based on your game folder names with the comparisons.
+only the WINE parser can need tweaks based on your game folder names with the comparisons.
 
 # Integrating with steam rom manager
 
