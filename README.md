@@ -35,7 +35,7 @@ Citra (.cia | .3ds)
 
 PPSSPP (.iso)
 
-Duckstation (.cue | .iso | .img)  
+Duckstation (.cue | .iso | .img | .ecm)  
 
 Yuzu/Ryujinx (.xci | .nsp)
 
