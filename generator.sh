@@ -128,6 +128,11 @@ Parser()
 		2) #Xenia
 	    echo -n wine \""$path_executable"\" "" \""$(ls *.xex *.iso})"\" >> start.sh
 		;;
+
+		3) #cxbx-r
+		echo -n wine \""$path_executable"\" "" \""$(ls *.xbe)"\" >> start.sh
+		;;
+
 		esac
 		;;
 
@@ -313,7 +318,8 @@ ZenityUI()
 	elif [ $parserList == 3 ]; then 
 	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
 	1 Xemu    	   "Original Xbox Emulator" \
-	2 Xenia   	   "Xbox 360 Emulator" )
+	2 Xenia   	   "Xbox 360 Emulator" \
+	3 Cxbx-r	   "Original Xbox Emulator" )
 
 	if [ $? == 1 ]; then ZenityUI;
 	fi
