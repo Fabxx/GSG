@@ -197,6 +197,7 @@ Parser()
 				fi
 			done
 
+			WINEPREFIX="$blurPrefix" wineboot
 			WINEPREFIX="$blurPrefix" winetricks -q vcrun2019 dxvk1030
 			echo -n WINEPREFIX=\""$blurPrefix"\" "" >> start.sh
 		
@@ -221,6 +222,7 @@ Parser()
 				fi
 			done
 
+			WINEPREFIX="$sr2Prefix" wineboot
 			WINEPREFIX="$sr2Prefix" winetricks -q vcrun2019 dxvk xact
 			echo -n WINEPREFIX=\""$sr2Prefix"\" "" >> start.sh
 		
@@ -245,6 +247,7 @@ Parser()
 				fi
 			done
 
+			WINEPREFIX="$tdu2Prefix" wineboot
 			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks -q dotnet40 dxvk1103 ie7 dinput8 directplay
 			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 "" >> start.sh
 			
@@ -435,7 +438,8 @@ exit
 
 elif [ $zenityPresent == 0 ]; then ZenityUI
 
-else echo "Zenity must be installed in your system to display UI."; exit;
+else echo "Zenity must be installed in your system to display UI." 
+exit
 
 fi
 
