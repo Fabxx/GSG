@@ -47,7 +47,7 @@ Snes9x (.smc | .sfc)
 
 Dolphin (.wbfs | .wad | .iso | .gcz | .rvz | .dol | .elf)
 
-Rpcs3 (.BIN)
+Rpcs3 (EBOOT.BIN | .iso)
 ```
 # Depencies
 `winetricks`

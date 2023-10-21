@@ -42,15 +42,11 @@ Parser()
 
 	for folder in "$path_games"/*; do cd "$folder";
 
-	echo "#!/bin/bash" > start.sh
-
-	echo -e >> start.sh
+	echo -e "#!/bin/bash" "\n" > start.sh
 
 	echo $(pwd); #show if goes into the folders successfully.
 
-	echo -e cd \"$(pwd)\" >> start.sh
-
-	echo -e >> start.sh
+	echo -e "cd \"$(pwd)\"\n" >> start.sh
 
 	case $parserList in
 
@@ -69,8 +65,17 @@ Parser()
 		echo -n \""$path_executable"\" "" \""$(ls *.iso)"\" >> start.sh
 		;;
 
-		4) #rpcs3
-		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls USRDIR/*.BIN)"\" >> start.sh
+		4) #rpcs3 JB format
+		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/EBOOT.BIN)"\" >> start.sh
+		;;
+
+		5) #rpcs3 .iso format, mount with fuseiso
+		echo -e "fuseiso \""$(ls *.iso)"\" \""$mountPoint"\"\n\n "\""$path_executable"\" "$rpcs3_args" \""$mountPoint/PS3_GAME/USRDIR/EBOOT.BIN"\" "\n\n" >> start.sh 
+
+		# Script that unmounts disk if emulator closes.
+		emptyQuotes=""
+		echo -e "while true\n do\n sleep 0.5\n if [[ \""$\(pidof rpcs3\)"\" == \""$emptyQuotes"\" ]]; then \n umount \""$mountPoint"\"\n fi\n break\n done" >> start.sh
+		;;
 		esac
 		;;
 
@@ -323,92 +328,114 @@ ZenityUI()
 	# Categories
 
 	parserList=$(zenity --list --text="Select a category" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
-	1 Sony   	   "Emulators" \
-	2 Nintendo 	   "Emulators" \
-	3 Microsoft    "Emulators" \
-	4 "PC Games"   "Wine" )
+	1 "Sony"   	        "Emulators" \
+	2 "Nintendo" 	    "Emulators" \
+	3 "Microsoft"       "Emulators" \
+	4 "PC Games"   		"Wine" )
 
 	if [ $? == 1 ]; then exit;
 	fi
 
-	if [ $parserList == 1 ]; then 
+	case $parserList in
 
-	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
-	1 Duckstation  "PS1 Emulator" \
-	2 Pcsx2   	   "PS2 Emulator" \
-	3 Ppsspp  	   "PSP Emulator" \
-	4 Rpcs3		   "PS3 Emulator" )
+		1)
+			parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
+			1 Duckstation  "PS1 Emulator" \
+			2 Pcsx2   	   "PS2 Emulator" \
+			3 Ppsspp  	   "PSP Emulator" \
+			4 Rpcs3		   "PS3 Emulator (JB format with EBOOT.BIN)" \
+			5 Rpcs3ISO     "PS3 Emulator (.iso format)" )
 
-	if [ $? == 1 ]; then ZenityUI;
-	fi
+			if [ $? == 1 ]; then ZenityUI;
+			fi
+			;;
 
-	elif [ $parserList == 2 ]; then 
-	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
-	1 Citra   	   "Nintendo 3DS Emulator" \
-	2 melonDS 	   "Nintendo DS Emulator" \
-	3 Yuzu/Ryujinx "Nintendo Switch Emulator" \
-	4 mGBA    	   "Gameboy Advance Emulator" \
-	5 mupen64	   "Nintendo 64 Emulator" \
-	6 snes9x	   "Super nintendo emulator" \
-	7 Cemu		   "Nintendo Wii U emulator" \
-	8 dolphin      "Nintendo Wii/Gamecube emulator" )
+		2)
+			parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
+			1 Citra   	   "Nintendo 3DS Emulator" \
+			2 melonDS 	   "Nintendo DS Emulator" \
+			3 Yuzu/Ryujinx "Nintendo Switch Emulator" \
+			4 mGBA    	   "Gameboy Advance Emulator" \
+			5 mupen64	   "Nintendo 64 Emulator" \
+			6 snes9x	   "Super nintendo emulator" \
+			7 Cemu		   "Nintendo Wii U emulator" \
+			8 dolphin      "Nintendo Wii/Gamecube emulator" )
 
-	if [ $? == 1 ]; then ZenityUI;
-	fi
+			if [ $? == 1 ]; then ZenityUI;
+			fi
+			;;
+		
+		3)
+			parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
+			1 Xemu    	   "Original Xbox Emulator" \
+			2 Xenia   	   "Xbox 360 Emulator" \
+			3 Cxbx-r	   "Original Xbox Emulator" )
 
-	elif [ $parserList == 3 ]; then 
-	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
-	1 Xemu    	   "Original Xbox Emulator" \
-	2 Xenia   	   "Xbox 360 Emulator" \
-	3 Cxbx-r	   "Original Xbox Emulator" )
-
-	if [ $? == 1 ]; then ZenityUI;
-	fi
-
-
-	elif [ $parserList == 4 ]; then
-
-	parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
-	1 Wine 	   		 				"Windows .exe games (default prefix)" \ )
-
-	if [ $? == 1 ]; then ZenityUI;
-	fi
-
-	fi
+			if [ $? == 1 ]; then ZenityUI;
+			fi
+			;;
 	
+		4)
+			parser_ID=$(zenity --list --text="Select a Parser" --column="ID" --column="Name" --column="Description" --width=800 --height=600 \
+			1 Wine 	   		 				"Windows .exe games (default prefix)" \ )
 
-	# If user presses "cancel" on main window then quit program
-	if [ $? == 1 ]; then exit
+			if [ $? == 1 ]; then ZenityUI;
+			fi
+			;;
+	esac
 
-	fi
 
 	zenity --info --text="Select the ROM's directory"
-
 	path_games=$(zenity --title="Select ROM's path" --directory --file-selection)
 
 	if [ $? == 1 ]; then ZenityUI
-
 	fi
 
-	#Both wine and xenia canary use default prefix. Else use emulator dialogs
-	if [[ $parserList == 4 && $parser_ID == 1 ]] || [[ $parserList == 3 && $parser_ID == 2 ]]; then
+	# Wine uses default prefix.
+	if [[ $parserList == 4 && $parser_ID == 1 ]]; then
 
 	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
-
 	wineboot
 	winetricks -q vcrun2019 dxvk vkd3d
-
-	else
-
-	echo $parserList
-	echo $parser_ID
-
-	zenity --info --text="Select the Emulator Executable"
 	
+	# Xenia canary requires emulator executable too other than wine. (until linux build works)
+
+	elif [[ $parserList == 3 && $parser_ID == 2 ]]; then
+	
+	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
+	wineboot
+	winetricks -q vcrun2019 dxvk vkd3d
+	zenity --info --text="Select the Emulator Executable"
 	path_executable=$(zenity --title="Emulator Selection" --file-selection)
 
 	if [ $? == 1 ]; then ZenityUI
-	fi 
+	fi
+
+	# ISO files for RPCS3 require mountpoint
+	elif  [[ $parserList == 1 && $parser_ID == 5 ]]; then
+	zenity --info --text="Select mount point for iso file"
+	mountPoint=$(zenity --title="Select Mount Point" --directory --file-selection)
+
+	if [ $? == 1 ]; then ZenityUI
+	fi
+
+	zenity --info --text="Select the Emulator Executable"
+	path_executable=$(zenity --title="Emulator Selection" --file-selection)
+
+	if [ $? == 1 ]; then ZenityUI
+	fi
+	
+	# If not using RPCS3 In ISO or wine, ask directly to select the emulator executable.
+	else
+
+	echo $parser_ID
+	echo $parser_List
+
+	zenity --info --text="Select the Emulator Executable"
+	path_executable=$(zenity --title="Emulator Selection" --file-selection)
+
+	if [ $? == 1 ]; then ZenityUI
+	fi
 
 	fi
 
@@ -428,7 +455,12 @@ winetricksPresent=$?
 
 # Check if needed components are available
 
-if [ $winePresent != 0 ]; then 
+if [ $zenityPresent != 0 ]; then
+
+echo "Zenity must be installed in your system to display UI." 
+exit
+
+elif [ $winePresent != 0 ]; then 
 
 zenity --error --text="Wine must be installed in your system"
 exit
@@ -438,9 +470,6 @@ elif [ $winetricksPresent != 0 ]; then
 zenity --error --text="Winetricks must be installed in your system"
 exit
 
-elif [ $zenityPresent == 0 ]; then ZenityUI
-
-else echo "Zenity must be installed in your system to display UI." 
-exit
+else ZenityUI
 
 fi
