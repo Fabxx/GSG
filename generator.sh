@@ -69,13 +69,6 @@ Parser()
 		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/EBOOT.BIN)"\" >> start.sh
 		;;
 
-		5) #rpcs3 .iso format, mount with fuseiso
-		echo -e "fuseiso \""$(ls *.iso)"\" \""$mountPoint"\"\n\n "\""$path_executable"\" "$rpcs3_args" \""$mountPoint/PS3_GAME/USRDIR/EBOOT.BIN"\" "\n\n" >> start.sh 
-
-		# Script that unmounts disk if emulator closes.
-		emptyQuotes=""
-		echo -e "while true\n do\n sleep 0.5\n if [[ \""$\(pidof rpcs3\)"\" == \""$emptyQuotes"\" ]]; then \n umount \""$mountPoint"\"\n fi\n break\n done" >> start.sh
-		;;
 		esac
 		;;
 
@@ -343,8 +336,7 @@ ZenityUI()
 			1 Duckstation  "PS1 Emulator" \
 			2 Pcsx2   	   "PS2 Emulator" \
 			3 Ppsspp  	   "PSP Emulator" \
-			4 Rpcs3		   "PS3 Emulator (JB format with EBOOT.BIN)" \
-			5 Rpcs3ISO     "PS3 Emulator (.iso format)" )
+			4 Rpcs3		   "PS3 Emulator" )
 
 			if [ $? == 1 ]; then ZenityUI;
 			fi
@@ -411,32 +403,19 @@ ZenityUI()
 	if [ $? == 1 ]; then ZenityUI
 	fi
 
-	# ISO files for RPCS3 require mountpoint
-	elif  [[ $parserList == 1 && $parser_ID == 5 ]]; then
-	zenity --info --text="Select mount point for iso file"
-	mountPoint=$(zenity --title="Select Mount Point" --directory --file-selection)
-
-	if [ $? == 1 ]; then ZenityUI
-	fi
-
 	zenity --info --text="Select the Emulator Executable"
 	path_executable=$(zenity --title="Emulator Selection" --file-selection)
 
 	if [ $? == 1 ]; then ZenityUI
 	fi
 	
-	# If not using RPCS3 In ISO or wine, ask directly to select the emulator executable.
+	# If not using wine, ask directly to select the emulator executable.
 	else
-
-	echo $parser_ID
-	echo $parser_List
-
 	zenity --info --text="Select the Emulator Executable"
 	path_executable=$(zenity --title="Emulator Selection" --file-selection)
 
 	if [ $? == 1 ]; then ZenityUI
 	fi
-
 	fi
 
  	Parser
