@@ -450,9 +450,6 @@ zenityPresent=$?
 type wine >> /dev/null
 winePresent=$?
 
-type winetricks >> /dev/null
-winetricksPresent=$?
-
 # Check if needed components are available
 
 if [ $zenityPresent != 0 ]; then
@@ -462,14 +459,7 @@ exit
 
 elif [ $winePresent != 0 ]; then 
 
-zenity --error --text="Wine must be installed in your system"
-exit
-
-elif [ $winetricksPresent != 0 ]; then 
-
-zenity --error --text="Winetricks must be installed in your system"
-exit
-
-else ZenityUI
-
+zenity --info --text="Consider installing wine and winetricks if you have to parse PC games"
 fi
+
+ZenityUI
