@@ -94,9 +94,9 @@ ROMs directory: /path/to/your/games
 
 Executable: /usr/bin/bash
 
-command line arguments: "${filePath}"
+command line arguments: "${filePath}" (write this as it is!)
 
-User's glob: ${title}/start.sh
+User's glob: ${title}/start.sh (write this as it is!)
 
 For portaits it is recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder
 not in subfolders.
