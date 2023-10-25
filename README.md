@@ -50,11 +50,9 @@ Dolphin (.wbfs | .wad | .iso | .gcz | .rvz | .dol | .elf)
 Rpcs3 (EBOOT.BIN | .iso)
 ```
 # Depencies
-`winetricks`
+For PC Parser: `winetricks` | `wine` 
 
-`wine` 
-
-`Zenity` for UI.
+Main Depency: `Zenity` for UI.
 
 # Initial Setup
 - (PC games only) First of all, setup your games by following the Game Setups txt document. If a game is not available please report it
