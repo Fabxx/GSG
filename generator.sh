@@ -376,15 +376,18 @@ ZenityUI()
 			;;
 	esac
 
-
-	zenity --info --text="Select the ROM's directory"
-	path_games=$(zenity --title="Select ROM's path" --directory --file-selection)
-
 	if [ $? == 1 ]; then ZenityUI
 	fi
 
 	# Wine uses default prefix.
 	if [[ $parserList == 4 && $parser_ID == 1 ]]; then
+
+	echo $winePresent
+
+	if [[ $winePresent != 0 || $winetricksPresent != 0 ]]; then 
+	zenity --error --text="You must install wine and winetricks to run this parser!"
+	ZenityUI
+	fi
 
 	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
 	wineboot
@@ -418,6 +421,9 @@ ZenityUI()
 	fi
 	fi
 
+	zenity --info --text="Select the ROM's directory"
+	path_games=$(zenity --title="Select ROM's path" --directory --file-selection)
+
  	Parser
 }
 
@@ -425,6 +431,9 @@ ZenityUI()
 
 type zenity >> /dev/null
 zenityPresent=$?
+
+type winetricks >> /dev/null
+winetricksPresent=$?
 
 type wine >> /dev/null
 winePresent=$?
@@ -436,9 +445,10 @@ if [ $zenityPresent != 0 ]; then
 echo "Zenity must be installed in your system to display UI." 
 exit
 
-elif [ $winePresent != 0 ]; then 
+elif [[ $winePresent != 0 || $winetricksPresent != 0 ]]; then 
 
-zenity --info --text="Consider installing wine and winetricks if you have to parse PC games"
+zenity --info --text="Consider installing wine and winetricks to use PC parser"
+
 fi
 
 ZenityUI
