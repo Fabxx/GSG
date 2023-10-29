@@ -382,47 +382,44 @@ ZenityUI()
 	# Wine uses default prefix.
 	if [[ $parserList == 4 && $parser_ID == 1 ]]; then
 
-	echo $winePresent
 
 	if [[ $winePresent != 0 || $winetricksPresent != 0 ]]; then 
 	zenity --error --text="You must install wine and winetricks to run this parser!"
 	ZenityUI
-	fi
-
-	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
-	wineboot
-	winetricks -q vcrun2019 dxvk vkd3d
 	
-	# Xenia canary requires emulator executable too other than wine. (until linux build works)
-
-	elif [[ $parserList == 3 && $parser_ID == 2 ]]; then
-	
-	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
-	wineboot
-	winetricks -q vcrun2019 dxvk vkd3d
-	zenity --info --text="Select the Emulator Executable"
-	path_executable=$(zenity --title="Emulator Selection" --file-selection)
-
-	if [ $? == 1 ]; then ZenityUI
-	fi
-
-	zenity --info --text="Select the Emulator Executable"
-	path_executable=$(zenity --title="Emulator Selection" --file-selection)
-
-	if [ $? == 1 ]; then ZenityUI
-	fi
-	
-	# If not using wine, ask directly to select the emulator executable.
 	else
-	zenity --info --text="Select the Emulator Executable"
-	path_executable=$(zenity --title="Emulator Selection" --file-selection)
+	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
+	wineboot
+	winetricks -q vcrun2019 dxvk vkd3d
+	fi
+	fi
+
+	
+	# Xenia canary requires wine. (until linux build works)
+
+	if [[ $parserList == 3 && $parser_ID == 2 ]]; then
+	
+	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
+	wineboot
+	winetricks -q vcrun2019 dxvk vkd3d
+	
+	fi
+
+	# Always ask for emulator executable if not using wine
+	if [[ $parserList != 4 && $parser_ID != 1 ]]; then
+	zenity --info --text="Select the emulator executable"
+	path_games=$(zenity --title="Select emulator executable" --file-selection)
 
 	if [ $? == 1 ]; then ZenityUI
 	fi
 	fi
 
+
+	#Always ask for ROM directory
 	zenity --info --text="Select the ROM's directory"
 	path_games=$(zenity --title="Select ROM's path" --directory --file-selection)
+	if [ $? == 1 ]; then ZenityUI
+	fi
 
  	Parser
 }
