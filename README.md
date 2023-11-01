@@ -25,7 +25,7 @@ mGBA (.gbc | .gba | .gb)
 
 Xemu (.iso)
 
-Xenia (.xex | .iso)
+Xenia (.xex | .iso | .zar)
 
 Cxbx-Reloaded (.xbe)
 
