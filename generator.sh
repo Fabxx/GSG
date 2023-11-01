@@ -120,7 +120,7 @@ Parser()
 		;;
 		
 		2) #Xenia
-	    	echo -n wine \""$path_executable"\" "" \""$(ls *.xex *.iso)"\" >> start.sh
+	    	echo -n wine \""$path_executable"\" "" \""$(ls *.xex *.iso *.zar)"\" >> start.sh
 		;;
 
 		3) #cxbx-r
