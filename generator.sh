@@ -406,9 +406,9 @@ ZenityUI()
 	fi
 
 	# Always ask for emulator executable if not using wine
-	if [[ $parserList != 4 && $parser_ID != 1 ]]; then
+	if [[ $parserList != 4 ]]; then
 	zenity --info --text="Select the emulator executable"
-	path_games=$(zenity --title="Select emulator executable" --file-selection)
+	path_executable=$(zenity --title="Select emulator executable" --file-selection)
 
 	if [ $? == 1 ]; then ZenityUI
 	fi
