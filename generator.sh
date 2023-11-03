@@ -63,7 +63,7 @@ SortRoms()
 	ZenityUI
 	fi
 
-	# FInd all files that can match the extension.
+	# Find all files that can match the extension in the folder. Create folders with those strings and move the files into the matching folder name
 	cd "$path_games"
 	
 	files=()
@@ -77,6 +77,11 @@ SortRoms()
 	for i in "${files[@]%.*}"; do mkdir "$i"; done
 
 	subdirs=(*/)
+
+	# Move those files that have the same name as the created folder. If the matches are done for that folder, go to the next folder.
+	# Example: CTR is the folder, then CTR.bin CTR.cue CTR.jpg are the files.
+	# remove the extension one by one and if it matches CTR, move the file into the folder.
+	# After the last file, go to the next folder and find the matching names.
 
 	while [[ $indexfiles -lt ${#files[@]} ]]
 
