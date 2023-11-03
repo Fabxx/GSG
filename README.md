@@ -66,6 +66,7 @@ Rpcs3 (EBOOT.BIN)
 - Main Depency: `Zenity` for UI.
 
   Debian/Ubuntu  `sudo apt install zenity wine winetricks`
+
   Arch 	   	 `sudo pacman -S zenity wine winetricks`
 
 # Initial Setup
@@ -139,6 +140,7 @@ https://github.com/Fabxx/LinuxGSG/assets/30447649/dd7a43d9-ba87-416d-b4fe-de14ff
 
 # Emulator parser showcase (autoSort)
 
+https://github.com/Fabxx/LinuxGSG/assets/30447649/0bf8c882-6297-46b4-a93e-41b17c0ae639
 
 
 # Steam Rom Manager Integration showcase
