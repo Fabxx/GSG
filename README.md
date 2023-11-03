@@ -77,7 +77,7 @@ Rpcs3 (EBOOT.BIN)
 
 - Extra prefixes for specific games must be created in disks with `EXT` filesystem, or else the program won't allow you to use that folder as a wine prefix.
 
-- If you need to auto sort, put all files and covers in the same folder. THe files must have the same names. (showcase below)
+- If you need to auto sort, put all files and covers in the same folder. The files must have the same names. (showcase below)
 
 # How to use
 
