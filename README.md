@@ -5,7 +5,7 @@ GSG Is a game script generator that generates `sh` runners per game.
 
 - Multiple emulator extension parse
 
-- Auto sort roms into folders
+- Auto sort roms into folders (needed to generate individual `sh` files)
 
 - Automatic prefix creation and setup
 
