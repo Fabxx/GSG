@@ -1,4 +1,16 @@
+# Copyright Fabxx 2023 - Software Distributed under the General Public License V3 WITHOUT ANY GUARANTEE OR WARRANTY.
+
 #!/bin/bash
+
+# Info message for auto sort option
+
+msg="moves roms into folders to generate start.sh per game. 2MB of free space is required.\n
+If a game requires multiple files with different extensions (like duckstation with .bin and .cue), 
+just rename the files with the same name and keep the extension as is.\n
+These emulators don't need sorting and function can be skipped:\n
+-Rpcs3 JB folder\n
+-Xenia extracted files with default.xex\n
+-Cxbx-r extracted files with default.xbe\n "
 
 # Emulator Arguments
 
@@ -33,12 +45,56 @@ KINGDOMDEV="-devmode"
 
 SCCT_SKIP_VIDEO="-nointro"
 
+# Rom sorter.
+
+SortRoms()
+{
+	zenity --question --text="sort roms into folders? If you don't know how it works please check AutoSort info in the main menu."
+	
+	if [[ $? == 1 ]]; then Parser
+	fi
+
+	# Check disk space
+	minDiskSpace=2M
+	freeDiskSpace=$(df --output=avail -BM "$path_games" | tail -n 1)
+
+	if [[ $freeDiskSpace < 2 ]]; then 
+	zenity --error --text="Not enough space on disk to create folders! The Parser cannot sort the files"
+	ZenityUI
+	fi
+
+	# FInd all files that can match the extension.
+	cd "$path_games"
+	
+	files=()
+       
+	readarray -t files < <(ls *.3ds *.app *.bin *.cia *.cue *.dsi *.dol *.ecm *.elf *.gb *.gba \
+		       *.gbc *.gcz *.ids *.img *.iso *.jpeg *.jpg *.n64 *.nds *.nsp *.png \
+		       *.rvz *.sbi *.sfc *.smc *.v64 *.wad *.wbfs *.wud *.wux *.xci *.z64 *.zar)
+
+	indexdirs=0 indexfiles=0
+
+	for i in "${files[@]%.*}"; do mkdir "$i"; done
+
+	subdirs=(*/)
+
+	while [[ $indexfiles -lt ${#files[@]} ]]
+
+		do
+			if [[ "${files[$indexfiles]%.*}" == "${subdirs[$indexdirs]%/*}" ]]; then
+				mv "${files[$indexfiles]}" "${subdirs[$indexdirs]}";
+				((indexfiles++))
+				indexdirs=0
+			else
+				((indexdirs++))
+			fi
+	done
+}
 
 # Parser
 
 Parser()
 {
-	zenity --info --text="Don't worry if in some folders it says file not found, because it tries to parse all extensions in each folder. So a single match is guaranteed"
 
 	for folder in "$path_games"/*; do cd "$folder";
 
@@ -120,7 +176,7 @@ Parser()
 		;;
 		
 		2) #Xenia
-	    	echo -n wine \""$path_executable"\" "" \""$(ls *.xex *.iso *.zar)"\" >> start.sh
+	    echo -n wine \""$path_executable"\" "" \""$(ls *.xex *.iso *.zar)"\" >> start.sh
 		;;
 
 		3) #cxbx-r
@@ -324,7 +380,8 @@ ZenityUI()
 	1 "Sony"   	        "Emulators" \
 	2 "Nintendo" 	    "Emulators" \
 	3 "Microsoft"       "Emulators" \
-	4 "PC Games"   		"Wine" )
+	4 "PC Games"   		"Wine" \
+	5 "Information"      "Show autoSort info")
 
 	if [ $? == 1 ]; then exit;
 	fi
@@ -374,6 +431,10 @@ ZenityUI()
 			if [ $? == 1 ]; then ZenityUI;
 			fi
 			;;
+		5)
+			zenity --info --ellipsize --text="$msg"
+			ZenityUI
+			;;
 	esac
 
 	if [ $? == 1 ]; then ZenityUI
@@ -421,7 +482,11 @@ ZenityUI()
 	if [ $? == 1 ]; then ZenityUI
 	fi
 
+	# TODO do not ask to sort if not using compact rom files. rom files must be single compressed format.
+
+	SortRoms
  	Parser
+	
 }
 
 # Detect available UI selection interfaces. type returns 0 if command is available, 1 if not.
