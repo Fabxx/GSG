@@ -71,7 +71,8 @@ SortRoms()
        
 	readarray -t files < <(ls *.3ds *.app *.bin *.cia *.cue *.dsi *.dol *.ecm *.elf *.gb *.gba \
 		       *.gbc *.gcz *.ids *.img *.iso *.jpeg *.jpg *.n64 *.nds *.nsp *.png \
-		       *.rvz *.sbi *.sfc *.smc *.v64 *.wad *.wbfs *.wud *.wux *.xci *.z64 *.zar)
+		       *.rvz *.sav *.sbi *.sfc *.smc *.v64 *.wad *.wbfs *.wud *.wux *.xci *.z64 *.zar \
+			    )
 
 	indexdirs=0 indexfiles=0
 
