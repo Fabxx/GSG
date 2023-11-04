@@ -55,10 +55,10 @@ SortRoms()
 	fi
 
 	# Check disk space
-	minDiskSpace=2M
+	minDiskSpace=2
 	freeDiskSpace=$(df --output=avail -BM "$path_games" | tail -n 1)
 
-	if [[ $freeDiskSpace < 2 ]]; then 
+	if [[ $freeDiskSpace < $minDiskSpace ]]; then 
 	zenity --error --text="Not enough space on disk to create folders! The Parser cannot sort the files"
 	ZenityUI
 	fi
