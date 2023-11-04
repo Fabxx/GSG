@@ -1,6 +1,6 @@
-# Copyright Fabxx 2023 - Software Distributed under the General Public License V3 WITHOUT ANY GUARANTEE OR WARRANTY.
-
 #!/bin/bash
+
+# Copyright Fabxx 2023 - Software Distributed under the General Public License V3 WITHOUT ANY GUARANTEE OR WARRANTY.
 
 # Info message for auto sort option
 
@@ -54,11 +54,12 @@ SortRoms()
 	if [[ $? == 1 ]]; then Parser
 	fi
 
-	# Check disk space
+	# Check disk space, remove the final char "M" from the space number.
 	minDiskSpace=2
-	freeDiskSpace=$(df --output=avail -BM "$path_games" | tail -n 1)
+	freeDiskSpaceRaw=$(df --output=avail -BM "$path_games" | tail -n 1)
+	freeDiskSpace=${freeDiskSpaceRaw::-1}
 
-	if [[ $freeDiskSpace < $minDiskSpace ]]; then 
+	if [[ $freeDiskSpace -lt $minDiskSpace ]]; then 
 	zenity --error --text="Not enough space on disk to create folders! The Parser cannot sort the files"
 	ZenityUI
 	fi
