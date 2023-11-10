@@ -79,7 +79,7 @@ Rpcs3 (EBOOT.BIN)
 
 - If you need to auto sort, put all files and covers in the same folder. The files must have the same names. (showcase below)
 
-# How to use
+# How to use (shell file)
 
 - Give execution permission: `chmod +x generator.sh`
 
@@ -93,6 +93,11 @@ Rpcs3 (EBOOT.BIN)
 
 - If using wine parser and have specific games that require a dedicated setup, check that the comparison strings for the names in the wine parser
   match your game folder names. If not, you can either rename your folders, or rename the strings in the comparisons.
+
+# How to use (binary executable)
+
+- After installng the depencies double click the binary and it will open the UI, the other steps are the same as above.
+- The binary was compiled with `shc` for `x86_64` architecture for now.
 
 # Integrating with steam rom manager
 
