@@ -95,9 +95,13 @@ Rpcs3 (EBOOT.BIN)
   match your game folder names. If not, you can either rename your folders, or rename the strings in the comparisons.
 
 # How to use (binary executable)
+- give execution permission: `chmod +x LinuxGSG`
+- Execute the binary:
+  - From Terminal: `./LinuxGSG`
+  - From Desktop: double click the binary
 
-- After installng the depencies double click the binary and it will open the UI, the other steps are the same as above.
-- The binary was compiled with `shc` for `x86_64` architecture for now.
+  # Supported Binary Architectures
+  -`x86_64` (aka `amd64`).
 
 # Integrating with steam rom manager
 
