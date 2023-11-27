@@ -29,7 +29,7 @@ note: emulator names are only for console references, if you have these file ext
 ```
 PC (.exe)
 
-PCSX2 (.iso | *.chd)
+PCSX2 (.iso | .chd)
 
 mGBA (.gbc | .gba | .gb)
 
@@ -45,13 +45,13 @@ Citra (.cia | .3ds)
 
 PPSSPP (.iso)
 
-Duckstation (.cue | .iso | .img | .ecm | *.chd)  
+Duckstation (.cue | .iso | .img | .ecm | .chd)  
 
 Yuzu/Ryujinx (.xci | .nsp)
 
 Cemu (.wum | .wux)
 
-Mupen64 (.z64 | .v64 | *.n64)
+Mupen64 (.z64 | .v64 | .n64)
 
 Snes9x (.smc | .sfc)
 
