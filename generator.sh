@@ -72,11 +72,11 @@ SortRoms()
 	readarray -t files < <(ls *.3ds *.app *.bin *.cia *.cue *.chd *.dsi *.dol *.ecm *.elf *.gb *.gba \
 		       *.gbc *.gcz *.ids *.img *.iso *.jpeg *.jpg *.n64 *.nds *.nsp *.png \
 		       *.rvz *.sav *.sbi *.sfc *.smc *.v64 *.wad *.wbfs *.wud *.wux *.xci *.z64 *.zar \
-			    )
+			)
 
-	indexdirs=0 indexfiles=0
+	indexdirs=0 indexfiles=0 index=0
 
-	for i in "${files[@]%.*}"; do mkdir "$i"; done
+	for i in "${files[@]%.*}"; do mkdir "$i"; ((index++)); echo $(($index*100/${#files[@]})); sleep 0.2; done | zenity --progress --title="Folder Creation" --text="Creating folders for roms..." --no-cancel --auto-close
 
 	subdirs=(*/)
 
@@ -94,7 +94,7 @@ SortRoms()
 				indexdirs=0
 			else
 				((indexdirs++))
-			fi
+			fi	
 	done
 }
 
@@ -373,8 +373,7 @@ Parser()
    esac
 	
    cd ..;
-   done;
-
+   done
    zenity --info --text="Script generation complete"
    ZenityUI
 }
