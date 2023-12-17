@@ -287,6 +287,31 @@ Parser()
 			WINEPREFIX="$sr2Prefix" winetricks -q vcrun2019 dxvk xact
 			echo -n WINEPREFIX=\""$sr2Prefix"\" "" >> start.sh
 		
+		elif [ "$(pwd)" == "$path_games/Driver 2" ]; then
+			
+			zenity --info --text="Specific game Driver 2 detected, choose a dedicated prefix folder for this game"
+
+			drv2Prefix=" "
+
+			while [ "$drv2Prefix" == " " ]
+			do
+				drv2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
+				if [ $? == 1 ]; then ZenityUI
+				fi
+
+				partitionType=$(stat -f -c %T "$drv2Prefix")
+
+				if [[ "$partitionType" != *"ext"* ]]; then
+
+				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
+				drv2Prefix=" "
+				fi
+			done
+
+			WINEPREFIX="$drv2Prefix" WINEARCH=win32 wineboot
+			
+			echo -n WINEPREFIX=\""$drv2Prefix"\" WINEARCH=win32 "" >> start.sh
+		
 		elif [ "$(pwd)" == "$path_games/Test Drive Unlimited 2" ]; then
 			
 			zenity --info --text="Specific game Test Drive Unlimited 2 detected, choose a dedicated prefix folder for this game"
@@ -357,7 +382,9 @@ Parser()
 		elif [ "$(pwd)" == "$path_games/Watch Dogs 2" ]; then echo -n "" wine "$(ls bin/*.exe)" >> start.sh
 
 		elif [ "$(pwd)" == "$path_games/Kingdom Come Deliverance" ]; then echo -n "" wine "$(ls bin/Win64/*.exe)" "$KINGDOMDEV" >> start.sh
-
+		
+		# TODO: Make zenity launcher for the orange box
+  			
 		# if the exe isn't in subdirs and doesn't require any arguments fallback to default string.
 
 		else echo wine \""$(ls *.exe)"\" >> start.sh
@@ -487,8 +514,6 @@ ZenityUI()
 	path_games=$(zenity --title="Select ROM's path" --directory --file-selection)
 	if [ $? == 1 ]; then ZenityUI
 	fi
-
-	# TODO do not ask to sort if not using compact rom files. rom files must be single compressed format.
 
 	SortRoms
  	Parser
