@@ -333,7 +333,7 @@ Parser()
 				fi
 			done
 
-			WINEPREFIX="$tdu2Prefix" wineboot
+			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 wineboot
 			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks -q dotnet40 dxvk1103 ie7 dinput8 directplay
 			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 "" >> start.sh
 			
