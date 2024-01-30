@@ -102,12 +102,23 @@ SortRoms()
 
 Parser()
 {
+	# If the user is generating runners to launch through XBMC Python scripts, the start.sh must kill
+	# XBMC to avoid input priority over the UI. then if the PID of the exe doesn't exist anymore
+	# the sh file re-runs XBMC executable again. Extra echos are at the end before the cd ..
+
+	zenity --question --text="Will you use these scripts with XBMC?"
+
+	if [[ $? == 1 ]]; then
+		isXbmcScript=0
+	else
+		isXbmcScript=1
+		zenity --info --text="Select XBMC.exe file"
+		xmbcExecutable=$(zenity --title="select XBMC executable" --file-selection)
+	fi
 
 	for folder in "$path_games"/*; do cd "$folder";
 
 	echo -e "#!/bin/bash" "\n" > start.sh
-
-	echo $(pwd); #show if goes into the folders successfully.
 
 	echo -e "cd \"$(pwd)\"\n" >> start.sh
 
@@ -117,19 +128,19 @@ Parser()
 		case $parser_ID in
 
 		1) #duckstation
-		echo -n \""$path_executable"\" "" \""$(ls *.cue *.iso *.img *.ecm *.chd)"\" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.cue *.iso *.img *.ecm *.chd)"\" "\n" >> start.sh
 		;;
 		
 		2) #pcsx2
-		echo -n \""$path_executable"\" "" \""$(ls *.iso *.chd)"\" "" "$pcsx2_args" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.iso *.chd)"\" "" "$pcsx2_args" "\n" >> start.sh
 		;;
 		
 		3) #ppsspp
-		echo -n \""$path_executable"\" "" \""$(ls *.iso)"\" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.iso)"\" "\n" >> start.sh
 		;;
 
 		4) #rpcs3 JB format
-		echo -n \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/EBOOT.BIN)"\" >> start.sh
+		echo -e \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/EBOOT.BIN)"\" "\n" >> start.sh
 		;;
 
 		esac
@@ -140,35 +151,35 @@ Parser()
 		case $parser_ID in
 	
 		1) #citra
-		echo -n \""$path_executable"\" "" \""$(ls *.3ds *.cia)"\" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.3ds *.cia)"\" "\n" >> start.sh
 		;;
 		
 		2) #melonDS
-		echo -n \""$path_executable"\" "" \""$(ls *.nds *.dsi *.ids *.app)"\" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.nds *.dsi *.ids *.app)"\" "\n" >> start.sh
 		;;
 		
 		3) #Yuzu/Ryujinx
-		echo -n \""$path_executable"\" "" \""$(ls *.nsp *.xci)"\" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.nsp *.xci)"\" "\n" >> start.sh
 		;;
 		
 		4) #mGBA
-		echo -n \""$path_executable"\" "" "$mgba_args" "" \""$(ls *.gba *.gbc *.gb)"\" >> start.sh
+		echo -e \""$path_executable"\" "" "$mgba_args" "" \""$(ls *.gba *.gbc *.gb)"\" "\n" >> start.sh
 		;;
 
 		5) #mupen64
-		echo -n \""$path_executable"\" "" \""$(ls *.z64 *.v64 *.n64)"\" "$mupen_args" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.z64 *.v64 *.n64)"\" "$mupen_args" "\n" >> start.sh
 		;;
 		
 		6) #snes9x
-		echo -n \""$path_executable"\" "" \""$(ls *.smc *.sfc)"\" >> start.sh
+		echo -e \""$path_executable"\" "" \""$(ls *.smc *.sfc)"\" "\n" >> start.sh
 		;;
 
 		7) #Cemu
-		echo -n \""$path_executable"\" "" "$cemu_args" \""$(ls *.wud *.wux)"\" >> start.sh
+		echo -e \""$path_executable"\" "" "$cemu_args" \""$(ls *.wud *.wux)"\" "\n" >> start.sh
 		;;
 
 		8) #Dolphin
-		echo -n \""$path_executable"\" "" "--exec=\""$(ls *.wbfs *.wad *.iso *.gcz *.rvz *.dol *.elf)"\"" "$dolphin_args" >> start.sh
+		echo -e \""$path_executable"\" "" "--exec=\""$(ls *.wbfs *.wad *.iso *.gcz *.rvz *.dol *.elf)"\"" "$dolphin_args" "\n" >> start.sh
 		;;
 
 		esac
@@ -179,15 +190,15 @@ Parser()
 
 	
 		1) #Xemu
-		echo -n \""$path_executable"\" "" "$xemu_args" "" \""$(ls *.iso)"\" >> start.sh
+		echo -e \""$path_executable"\" "" "$xemu_args" "" \""$(ls *.iso)"\" "\n" >> start.sh
 		;;
 		
 		2) #Xenia
-	    echo -n wine \""$path_executable"\" "" \""$(ls *.xex *.iso *.zar)"\" >> start.sh
+	    echo -e wine \""$path_executable"\" "" \""$(ls *.xex *.iso *.zar)"\" "\n" >> start.sh
 		;;
 
 		3) #cxbx-r
-		echo -n wine \""$path_executable"\" "" \""$(ls *.xbe)"\" >> start.sh
+		echo -e wine \""$path_executable"\" "" \""$(ls *.xbe)"\" "\n" >> start.sh
 		;;
 
 		esac
@@ -200,6 +211,10 @@ Parser()
 		1) #Wine
 		# List of games that use the DLLOVERRIDES in the script. 
 		#NOTE: If you renamed your game folder that is in this list, please rename the folder names here to match your folder names.  
+
+		# gather executable to use in XBMC echos
+
+		exeFile="$(ls *.exe)"
 
 		if [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell" ]; then 
 
@@ -398,6 +413,25 @@ Parser()
 	*)
 
    esac
+
+	# Write the script that runs XBMC once executable or emulator is closed
+   if [[ $isXbmcScript -eq 1 ]]; then
+	echo -e "while true ; do\n" >> start.sh
+	
+	if [[ $parserList -eq 4 ]]; then
+		echo -e "if [[ \"\$(pidof "$exeFile")\" == \"""\" ]]; then\n" >> start.sh
+	else 
+		emulatorExecutable=$(basename -z "$path_executable")
+		echo -e "if [[ \"\$(pidof "$emulatorExecutable")\" == \"""\" ]]; then\n" >> start.sh 
+	fi
+	
+	echo -e "wine \""$xmbcExecutable"\"" "\n" >> start.sh
+	echo -e "break\n" >> start.sh
+	echo -e "fi\n" >> start.sh
+	echo -e "sleep 3\n" >> start.sh
+	echo -e "done" >> start.sh
+
+   fi
 	
    cd ..;
    done
