@@ -1,6 +1,3 @@
-# GSG
-GSG Is a game script generator that generates `sh`/`lnk` runners per game.
-
 # Key Features
 
 - Multiple emulator extension parse
