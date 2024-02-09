@@ -96,6 +96,8 @@ Rpcs3 (EBOOT.BIN)
 Simply open powershell prompt and execute with `.\generator.ps1`, a CLI interface has been provided to 
 select the parsers
 
+# Powershell notes (for XBMC Users, TODO)
+
 # Integrating with steam rom manager
 
 parser setup:
