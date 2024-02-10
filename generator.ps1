@@ -1,6 +1,6 @@
 # Emulator Arguments 
 
-$xemu_args="-full-screen -dvd_path="
+$xemu_args="-full-screen -dvd_path"
 $xenia_args="--gpu vulkan"
 $pcsx2_args="-fullscreen"
 $mgba_args="-f"
@@ -22,7 +22,12 @@ $SCCT_SKIP_VIDEO="-nointro"
 
 Function interface() {
 
+# force the while loop checks and XBMC check
 $parserList = 14
+
+$parserID = 14
+
+$isXbmcscript = -1
 
 @"
 Categories:
@@ -34,11 +39,10 @@ Categories:
 0 Exit
 "@
 
-while (($parserList -lt 0) -or ($parserList -gt 5)) {
+while (($parserList -lt 0) -or ($parserList -ge 5)) {
 	
-	$parserList = Read-Host "Select category of games (0-5)"
+	[int]$parserList = Read-Host "Select category of games (0-5)"
 }
-
 
 if ($parserList -eq 0) {
 	Exit
@@ -49,15 +53,17 @@ switch ($parserList) {
 	
 1 {
 @"
-Select a parser
-
 1)	Duckstation
 2)	Pcsx2
 3)	Ppsspp
 4)	Rpcs3
 "@
-
-$parserID = Read-Host
+	
+		while (($parserID -lt 1) -or ($parserID -ge 4)) {
+		
+			[int]$parserID = Read-Host "Select a parser (1-4)"
+		}
+	
 	}
 	
 2 {
@@ -72,7 +78,10 @@ $parserID = Read-Host
 8 dolphin          Nintendo Wii/Gamecube emulator
 "@
 
-$parserID = Read-Host
+	while (($parserID -lt 1) -or ($parserID -ge 8)) {
+		
+			[int]$parserID = Read-Host "Select a parser (1-8)"
+		}
 	}
 	
 3 {
@@ -81,42 +90,34 @@ $parserID = Read-Host
 2 Xenia   	   Xbox 360 Emulator
 3 Cxbx-r	   Original Xbox Emulator
 "@
-$parserID = Read-Host
+	while (($parserID -lt 1) -or ($parserID -ge 3)) {
+			
+				[int]$parserID = Read-Host "Select a parser (1-3)"
+			}
 	}
 	
 4 {
 @"
 1 Windows Executables
 "@
-$parserID = Read-Host
+	while (($parserID -lt 1) -or ($parserID -ge 1)) {
+			
+				[int]$parserID = Read-Host "Select a parser (1)"
+			}
 		}
 		
 	}
 
-<#
-# Check if it's XBMC script or not.	
-
-@"
-Will you use these scripts with XBMC? Type 1 for yes or 0 for no
-"@
-
 
 while ( ($isXbmcscript -ne 1) -and ($isXbmcscript -ne 0) ) {
 	
-    $isXbmcscript = Read-Host
+    [int]$isXbmcscript = Read-Host "Will you use these scripts with XBMC? Type 1 for yes or 0 for no"
 }
 
 if ($isXbmcscript -eq 1) {
-	$xbmcExecutable = Read-Host "Select XBMC Executable"
+	$xbmcExecutable = Read-Host "Write absolute path of XBMC, including XBMC.exe"
 }
 
-Disabling, because we cannot run XBMC from the shortcut, since the argument is for the application, not a system argument.
-once killed, from windows it needs to be manually restarted. An idea would be to disable input priority on XBMC window
-so that the user does not need to kill the app.
-
-Also from windows it can be difficult for some apps to track their PID to check if the application has been killed before restarting XBMC,
-because some PIDs can auto-restart and change their name.
-#>
 
 # Let user select game folder
 
@@ -334,7 +335,8 @@ Function parser() {
 					1 {
 						# Windows .exe
 						$tmpExe = $(Get-Item *.exe).FullName
-						$exePath = $(Get-Item $tmpExe).Basename
+						$exePath = $(Get-Item $tmpExe).Directory
+						$exeName = $(Get-Item $tmpExe).Basename
 						
 						if ( "$(pwd)" -eq "$path\Colin McRae Rally 2005" ) {
 							
@@ -357,12 +359,58 @@ Function parser() {
 				}
 			}
 		}
+		
+		if ($isXbmcscript -eq 1) {
+			xbmcScriptGen
+		}
+
 		echo $(pwd)
 		cd ..
 	}
-	
-	interface
 }
+
+Function xbmcScriptGen() {
+
+	# Create empty powershell file to write script.
+
+	"" | Out-File -FilePath $path\$folder\Xbmc.ps1
+
+if (($parserList -eq 4) -and ($parserID -eq 1)) {
+		
+			
+$xbmcScript = @"
+		
+while (`$true) {
+
+	if (!`$(Get-Process $exeName)) {
+		cd '$xbmcPath'; .\XBMC.exe
+		break
+	}
+
+Start-Sleep -Seconds 3.0
+}
+"@		
+	} else{
+		
+$emulatorProcName = $(get-Item $emulator).Basename
+
+$xbmcScript = @"
+		
+while (`$true) {
+
+	if (!`$(Get-Process $emulatorProcName)) {
+		cd '$xbmcPath'; .\XBMC.exe
+		break
+	}
+
+Start-Sleep -Seconds 3.0
+}
+"@		
+	}
+	
+	Add-Content $path\$folder\Xbmc.ps1 $xbmcScript
+}
+
 
 interface
 parser
