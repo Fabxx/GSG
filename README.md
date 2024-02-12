@@ -103,7 +103,7 @@ execute  `.\generator.ps1`, a CLI interface has been provided to select the pars
 
 NOTE 1: do NOT write paths with double quotes in them.
 
-NOTE 2: on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
+NOTE 2 (for XBMC users): on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
 and will open XBMC again. I can't do much about it. This is not the case for emulators
 
 NOTE 3: The script looks for `.exe`, if you have multiple exes in the same folder, rename the extension of those that you don't need.
