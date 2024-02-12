@@ -8,6 +8,8 @@
 
 - Automatic application of arguments, overrides and such.
 
+- Can generate XBMC 9.11 compatible runners, made for `XBMC360` in my repo.
+
 # Contributing
 
 - If a game setup is missing in the `game setups.txt`, please create an issue with the appropriate labels.
