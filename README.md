@@ -1,13 +1,10 @@
-# LinuxGSG
-GSG Is a game script generator that generates `sh` runners per game.
-
 # Key Features
 
 - Multiple emulator extension parse
 
-- Auto sort roms into folders (needed to generate individual `sh` files)
+- Auto sort roms into folders (Linux only for now)
 
-- Automatic prefix creation and setup
+- Automatic prefix creation and setup (Linux Only, for wine)
 
 - Automatic application of arguments, overrides and such.
 
@@ -59,7 +56,7 @@ Dolphin (.wbfs | .wad | .iso | .gcz | .rvz | .dol | .elf)
 
 Rpcs3 (EBOOT.BIN)
 ```
-# Depencies
+# Depencies (Linux)
 
 - For PC Parser: `winetricks` | `wine` 
 
@@ -69,7 +66,7 @@ Rpcs3 (EBOOT.BIN)
 
   Arch 	   	 `sudo pacman -S zenity wine winetricks`
 
-# Initial Setup
+# Initial Setup for Linux
 
 - (PC games only) First of all, setup your games by following the `Game Setups.txt` document.
 
@@ -94,14 +91,16 @@ Rpcs3 (EBOOT.BIN)
 - If using wine parser and have specific games that require a dedicated setup, check that the comparison strings for the names in the wine parser
   match your game folder names. If not, you can either rename your folders, or rename the strings in the comparisons.
 
-# How to use (binary executable)
-- give execution permission: `chmod +x LinuxGSG`
-- Execute the binary:
-  - From Terminal: `./LinuxGSG`
-  - From Desktop: double click the binary
+# How to use (Powershell file)
 
-  # Supported Binary Architectures
-  -`x86_64` (aka `amd64`).
+open powershell and type: `Set-ExecutionPolicy Unrestricted` and approve the changes.
+
+then execute  `.\generator.ps1`, a CLI interface has been provided to select the parsers.
+
+do NOT write paths with double quotes in them.
+
+Note that on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
+and will open XBMC again. I can't do much about it. This is not the case for emulators
 
 # Integrating with steam rom manager
 
@@ -156,4 +155,6 @@ https://github.com/Fabxx/LinuxGSG/assets/30447649/0bf8c882-6297-46b4-a93e-41b17c
 
 https://github.com/Fabxx/LinuxGSG/assets/30447649/47bbbafa-69f7-4d5d-a70c-1f0a95b97a13
 
+
+# Powershell script showcase (todo)
 
