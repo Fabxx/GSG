@@ -93,10 +93,11 @@ Rpcs3 (EBOOT.BIN)
 
 # How to use (Powershell file)
 
-Set execution policy in powershell to `Unrestricted` for all sessions, not just the current prompt session.
+open powershell and type: `Set-ExecutionPolicy Unrestricted` and approve the changes.
 
-then simply open powershell prompt and execute with `.\generator.ps1`, a CLI interface has been provided to 
-select the parsers.
+then execute  `.\generator.ps1`, a CLI interface has been provided to select the parsers.
+
+do NOT write paths with double quotes in them.
 
 Note that on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
 and will open XBMC again. I can't do much about it. This is not the case for emulators
