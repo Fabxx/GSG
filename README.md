@@ -93,16 +93,21 @@ Rpcs3 (EBOOT.BIN)
 
 # How to use (Powershell file)
 
-open powershell and type: `Set-ExecutionPolicy Unrestricted` and approve the changes.
+open powershell as administrator and type: `Set-ExecutionPolicy Unrestricted` and approve the changes.
 
-then execute  `.\generator.ps1`, a CLI interface has been provided to select the parsers.
+then close and open again powershell as normal user 
 
-do NOT write paths with double quotes in them.
+execute  `.\generator.ps1`, a CLI interface has been provided to select the parsers.
 
-Note that on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
+NOTE 1: do NOT write paths with double quotes in them.
+
+NOTE 2: on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
 and will open XBMC again. I can't do much about it. This is not the case for emulators
 
-# Integrating with steam rom manager
+NOTE 3: The script looks for `.exe`, if you have multiple exes in the same folder, rename the extension of those that you don't need.
+
+
+# [Extra] Integrating with steam rom manager
 
 parser setup:
 
@@ -156,5 +161,5 @@ https://github.com/Fabxx/LinuxGSG/assets/30447649/0bf8c882-6297-46b4-a93e-41b17c
 https://github.com/Fabxx/LinuxGSG/assets/30447649/47bbbafa-69f7-4d5d-a70c-1f0a95b97a13
 
 
-# Powershell script showcase (todo)
+# Powershell script showcase (TODO)
 
