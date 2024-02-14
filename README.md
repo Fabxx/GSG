@@ -130,7 +130,9 @@ Executable: /usr/bin/bash
 
 command line arguments: "${filePath}" (write this as it is!)
 
-User's glob: ${title}/start.sh (write this as it is!)
+User's glob [Linux users]: ${title}/start.sh (write this as it is!)
+
+User's glob [Windows users]: ${title}/*@(.exe)
 
 For portaits it is recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder
 not in subfolders.
@@ -138,7 +140,7 @@ not in subfolders.
 Local portraits image: /path/to/games/${title}/*@(.jpg)
 ```
 
-Detects all start.sh files, along with jpg covers (change the extension if you use another format)
+Detects all start.sh/.exe files, along with jpg covers (change the extension if you use another format)
 
 You can duplicate this parser and change the category, title name and ROM's path since now everything uses a `sh` file as a base to run the games, emulators ecc,
 
