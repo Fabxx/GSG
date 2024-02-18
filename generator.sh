@@ -33,6 +33,8 @@ SC_SCPT_OVERRIDE="*d3d8, *msacm32, *msvfw32=n,b"
 
 SCCT_OVERRIDE="*d3d9, *msacm32, *msvfw32=n,b"
 
+GTA3_OVERRIDE="d3d8=n,b"
+
 # PC Games arguments
 
 # Current Arguments: Colin McRae Rally 2005 - Kingdom Come Deliverance - Splinter Cell Chaos Theory
@@ -235,6 +237,10 @@ Parser()
 		elif [ "$(pwd)" == "$path_games/Need For Speed Most Wanted 2005" ]; then 
 		
 			echo -n WINEDLLOVERRIDES=\""$NFSC_MW_OVERRIDE"\" wine \""$exeFile"\" >> start.sh 
+		
+		elif [ "$(pwd)" == "$path_games/Grand Theft Auto III" ]; then 
+		
+			echo -n WINEDLLOVERRIDES=\""$GTA3_OVERRIDE"\" wine \""$exeFile"\" >> start.sh 
 
 
 		elif [ "$(pwd)" == "$path_games/Blur" ]; then
@@ -263,7 +269,7 @@ Parser()
 			
 			tdu2Prefix="/home/$(whoami)/tdu2pfx"
 			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 wineboot
-			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks dotnet40 dxvk1103 ie7 dinput8 directplay
+			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks ie7 dotnet40 dxvk1103 dinput8 directplay
 			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 wine \""$exeFile"\" >> start.sh
 
 
@@ -383,7 +389,7 @@ ZenityUI()
 	else
 	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
 	wineboot
-	winetricks -q vcrun2019 dxvk vkd3d
+	winetricks -q vcrun2019 dxvk vkd3d dinput8
 	fi
 	fi
 
