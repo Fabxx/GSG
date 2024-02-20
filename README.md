@@ -76,6 +76,8 @@ Rpcs3 (EBOOT.BIN)
 
 - If you need to auto sort, put all files and covers in the same folder. The files must have the same names.
 
+- Games that require specific prefix must have the same name folder as in the script to be detected. 
+
 # How to use (shell file)
 
 - Give execution permission: `chmod +x generator.sh`
