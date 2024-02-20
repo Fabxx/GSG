@@ -33,7 +33,7 @@ SC_SCPT_OVERRIDE="*d3d8, *msacm32, *msvfw32=n,b"
 
 SCCT_OVERRIDE="*d3d9, *msacm32, *msvfw32=n,b"
 
-DIRT_2_3_SH_OVERRIDE="*openal32=n,b"
+GTA3_OVERRIDE="d3d8=n,b"
 
 # PC Games arguments
 
@@ -44,6 +44,8 @@ CMR2005="FORCEHT WIDESCREENDISPLAY NOVIDEO"
 KINGDOMDEV="-devmode"
 
 SCCT_SKIP_VIDEO="-nointro"
+
+isXbmcScript=2
 
 # Rom sorter.
 
@@ -76,8 +78,6 @@ SortRoms()
 
 	indexdirs=0 indexfiles=0 index=0
 
-	for i in "${files[@]%.*}"; do mkdir "$i"; ((index++)); echo $(($index*100/${#files[@]})); sleep 0.2; done | zenity --progress --title="Folder Creation" --text="Creating folders for roms..." --no-cancel --auto-close
-
 	subdirs=(*/)
 
 	# Move those files that have the same name as the created folder. If the matches are done for that folder, go to the next folder.
@@ -105,8 +105,9 @@ Parser()
 	# If the user is generating runners to launch through XBMC Python scripts, the start.sh must kill
 	# XBMC to avoid input priority over the UI. then if the PID of the exe doesn't exist anymore
 	# the sh file re-runs XBMC executable again. Extra echos are at the end before the cd ..
-
-	zenity --question --text="Will you use these scripts with XBMC?"
+	
+	if [[ $isXbmcScript -ne 0 && $isXbmcScript -ne 1 ]]; then
+	zenity --question --text="Will you use these scripts with XBMC? Will ask only once."
 
 	if [[ $? == 1 ]]; then
 		isXbmcScript=0
@@ -114,6 +115,7 @@ Parser()
 		isXbmcScript=1
 		zenity --info --text="Select XBMC.exe file"
 		xmbcExecutable=$(zenity --title="select XBMC executable" --file-selection)
+	fi
 	fi
 
 	for folder in "$path_games"/*; do cd "$folder";
@@ -214,195 +216,64 @@ Parser()
 
 		# gather executable to use in XBMC echos
 
-		exeFile="$(ls *.exe)"
+		exeFile="$(find ~+ -name '*.EXE')"
 
 		if [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell" ]; then 
 
-			echo -n WINEDLLOVERRIDES=\""$SC_SCPT_OVERRIDE"\" >> start.sh 
+			echo -n WINEDLLOVERRIDES=\""$SC_SCPT_OVERRIDE"\" wine \""$exeFile"\" >> start.sh 
 
 		elif [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell Pandora Tomorrow" ]; then 
 
-			echo -n WINEDLLOVERRIDES=\""$SC_SCPT_OVERRIDE"\" >> start.sh
+			echo -n WINEDLLOVERRIDES=\""$SC_SCPT_OVERRIDE"\" wine \""$exeFile"\" >> start.sh
 
 		elif [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell Chaos Theory" ]; then
 		
-			echo -n WINEDLLOVERRIDES=\""$SCCT_OVERRIDE"\" >> start.sh
+			echo -n WINEDLLOVERRIDES=\""$SCCT_OVERRIDE"\" wine \""$exeFile"\" >> start.sh
 
 		elif [ "$(pwd)" == "$path_games/Need For Speed Carbon" ]; then 
 		
-			echo -n WINEDLLOVERRIDES=\""$NFSC_MW_OVERRIDE"\" >> start.sh
+			echo -n WINEDLLOVERRIDES=\""$NFSC_MW_OVERRIDE"\" wine \""$exeFile"\" >> start.sh
 
 		elif [ "$(pwd)" == "$path_games/Need For Speed Most Wanted 2005" ]; then 
 		
-			echo -n WINEDLLOVERRIDES=\""$NFSC_MW_OVERRIDE"\" >> start.sh 
-
-		elif [ "$(pwd)" == "$path_games/DiRT 2" ]; then 
+			echo -n WINEDLLOVERRIDES=\""$NFSC_MW_OVERRIDE"\" wine \""$exeFile"\" >> start.sh 
 		
-			echo -n WINEDLLOVERRIDES=\""$DIRT_2_3_SH_OVERRIDE"\" >> start.sh 
-
-		elif [ "$(pwd)" == "$path_games/DiRT 3 Complete Edition" ]; then 
+		elif [ "$(pwd)" == "$path_games/Grand Theft Auto III" ]; then 
 		
-			echo -n WINEDLLOVERRIDES=\""$DIRT_2_3_SH_OVERRIDE"\" >> start.sh
+			echo -n WINEDLLOVERRIDES=\""$GTA3_OVERRIDE"\" wine \""$exeFile"\" >> start.sh 
 
-		elif [ "$(pwd)" == "$path_games/Colin McRae DiRT" ]; then 
-		
-			echo -n WINEDLLOVERRIDES=\""$DIRT_2_3_SH_OVERRIDE"\" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/DiRT Showdown" ]; then 
-		
-			echo -n WINEDLLOVERRIDES=\""$DIRT_2_3_SH_OVERRIDE"\" >> start.sh 
 
 		elif [ "$(pwd)" == "$path_games/Blur" ]; then
 
-			zenity --info --text="Specific game Blur detected, please choose a dedicated prefix folder for this game"
-
-			blurPrefix=" "
-
-			while [ "$blurPrefix" == " " ]
-			do
-				blurPrefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-				if [ $? == 1 ]; then ZenityUI
-				fi
-
-				partitionType=$(stat -f -c %T "$blurPrefix")
-
-				if [[ "$partitionType" != *"ext"* ]]; then
-
-				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
-				blurPrefix=" "
-				fi
-			done
-
+			blurPrefix="/home/$(whoami)/blurpfx"
 			WINEPREFIX="$blurPrefix" wineboot
 			WINEPREFIX="$blurPrefix" winetricks -q vcrun2019 dxvk1030
-			echo -n WINEPREFIX=\""$blurPrefix"\" "" >> start.sh
+			echo -n WINEPREFIX=\""$blurPrefix"\" wine \""$exeFile"\" >> start.sh
 		
 		elif [ "$(pwd)" == "$path_games/Saints Row 2" ]; then
 			
-			zenity --info --text="Specific game Saints Row 2 detected, choose a dedicated prefix folder for this game"
-
-			sr2Prefix=" "
-
-			while [ "$sr2Prefix" == " " ]
-			do
-				sr2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-				if [ $? == 1 ]; then ZenityUI
-				fi
-
-				partitionType=$(stat -f -c %T "$sr2Prefix")
-
-				if [[ "$partitionType" != *"ext"* ]]; then
-
-				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
-				sr2Prefix=" "
-				fi
-			done
-
+			sr2Prefix="/home/$(whoami)/sr2pfx"
 			WINEPREFIX="$sr2Prefix" wineboot
 			WINEPREFIX="$sr2Prefix" winetricks -q vcrun2019 dxvk xact
-			echo -n WINEPREFIX=\""$sr2Prefix"\" "" >> start.sh
+			echo -n WINEPREFIX=\""$sr2Prefix"\" wine \""$exeFile"\" >> start.sh
 		
 		elif [ "$(pwd)" == "$path_games/Driver 2" ]; then
-			
-			zenity --info --text="Specific game Driver 2 detected, choose a dedicated prefix folder for this game"
-
-			drv2Prefix=" "
-
-			while [ "$drv2Prefix" == " " ]
-			do
-				drv2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-				if [ $? == 1 ]; then ZenityUI
-				fi
-
-				partitionType=$(stat -f -c %T "$drv2Prefix")
-
-				if [[ "$partitionType" != *"ext"* ]]; then
-
-				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
-				drv2Prefix=" "
-				fi
-			done
+		
+			drv2Prefix="/home/$(whoami)/d2pfx"
 
 			WINEPREFIX="$drv2Prefix" WINEARCH=win32 wineboot
 			
-			echo -n WINEPREFIX=\""$drv2Prefix"\" WINEARCH=win32 "" >> start.sh
+			echo -n WINEPREFIX=\""$drv2Prefix"\" WINEARCH=win32 wine \""$exeFile"\" >> start.sh
 		
 		elif [ "$(pwd)" == "$path_games/Test Drive Unlimited 2" ]; then
 			
-			zenity --info --text="Specific game Test Drive Unlimited 2 detected, choose a dedicated prefix folder for this game"
-
-			tdu2Prefix=" "
-
-			while [ "$tdu2Prefix" == " " ]
-			do
-				tdu2Prefix=$(zenity --title="Select Prefix Folder" --directory --file-selection)
-				if [ $? == 1 ]; then ZenityUI
-				fi
-
-				partitionType=$(stat -f -c %T "$tdu2Prefix")
-
-				if [[ "$partitionType" != *"ext"* ]]; then
-
-				zenity --error --text="Partition type is "$partitionType", but must be EXT format"
-				tdu2Prefix=" "
-				fi
-			done
-
+			tdu2Prefix="/home/$(whoami)/tdu2pfx"
 			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 wineboot
-			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks -q dotnet40 dxvk1103 ie7 dinput8 directplay
-			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 "" >> start.sh
-			
-		fi
+			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks ie7 dotnet40 dxvk1103 dinput8 directplay
+			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 wine \""$exeFile"\" >> start.sh
 
-		# reach the exe located in subdirs or add arguments for some specific games. Here is a list of the games i've encountered so far.
 
-		if   [ "$(pwd)" == "$path_games/Colin McRae Rally 2005" ]; then echo -n "" wine "$(ls *.exe)" "$CMR2005" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Borderlands" ]; then echo -n "" wine "$(ls Binaries/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Borderlands 2" ]; then echo -n "" wine "$(ls Binaries/Win32/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Borderlands - The Pre-Sequel" ]; then echo -n "" wine "$(ls Binaries/Win32/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/BioShock Remastered" ]; then echo -n "" wine "$(ls Build/Final/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/BioShock 2 Remastered" ]; then echo -n "" wine "$(ls Build/Final/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/BioShock Infinite - The Complete Edition" ]; then echo -n "" wine "$(ls Binaries/Win32/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Far Cry 3 - Duology" ]; then echo -n "" wine "$(ls FarCry3/bin/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Mafia II" ]; then echo -n "" wine "$(ls pc/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Mirror's Edge" ]; then echo -n "" wine "$(ls Binaries/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Sniper Elite 3" ]; then echo -n "" wine "$(ls bin/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Spider Man Web of Shadows" ]; then echo -n "" wine "$(ls image/pc/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/THIEF - Definitive Edition" ]; then echo -n "" wine "$(ls Binaries2/Win64/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell" ]; then echo -n "" wine "$(ls system/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell Pandora Tomorrow" ]; then echo -n "" wine "$(ls offline/system/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell Chaos Theory" ]; then echo -n "" wine "$(ls System/*.exe)" "$SCCT_SKIP_VIDEO" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Tom Clancys Splinter Cell Conviction" ]; then echo -n "" wine "$(ls src/system/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Unreal Tournament 3" ]; then echo -n "" wine "$(ls Binaries/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Watch Dogs" ]; then echo -n "" wine "$(ls bin/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Watch Dogs 2" ]; then echo -n "" wine "$(ls bin/*.exe)" >> start.sh
-
-		elif [ "$(pwd)" == "$path_games/Kingdom Come Deliverance" ]; then echo -n "" wine "$(ls bin/Win64/*.exe)" "$KINGDOMDEV" >> start.sh
-		
-		# TODO: Make zenity launcher for the orange box
-  			
-		# if the exe isn't in subdirs and doesn't require any arguments fallback to default string.
-
-		else echo wine \""$(ls *.exe)"\" >> start.sh
+		else echo wine \""$exeFile"\" >> start.sh
 
 		fi
 		;;
@@ -518,7 +389,7 @@ ZenityUI()
 	else
 	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
 	wineboot
-	winetricks -q vcrun2019 dxvk vkd3d
+	winetricks -q vcrun2019 dxvk vkd3d dinput8
 	fi
 	fi
 

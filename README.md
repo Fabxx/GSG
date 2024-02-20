@@ -72,11 +72,11 @@ Rpcs3 (EBOOT.BIN)
 
 - (PC games only) First of all, setup your games by following the `Game Setups.txt` document.
 
-- (PC Games only) if multiple `.exe` are on the same directory, rename the extension of the unnecessary executables, then run the parser.
+- (PC Games only) the bash script looks for `.EXE`, rename the extension of your main exe tu run to .EXE 
 
-- Extra prefixes for specific games must be created in disks with `EXT` filesystem, or else the program won't allow you to use that folder as a wine prefix.
+- If you need to auto sort, put all files and covers in the same folder. The files must have the same names.
 
-- If you need to auto sort, put all files and covers in the same folder. The files must have the same names. (showcase below)
+- Games that require specific prefix must have the same name folder as in the script to be detected. 
 
 # How to use (shell file)
 
@@ -89,9 +89,6 @@ Rpcs3 (EBOOT.BIN)
 - Setup the paths when asked to do so
 
 - The program can sort the rom files and cover images into folders for you if you haven't. More info in the option 5 of the Menu.
-
-- If using wine parser and have specific games that require a dedicated setup, check that the comparison strings for the names in the wine parser
-  match your game folder names. If not, you can either rename your folders, or rename the strings in the comparisons.
 
 # How to use (Powershell file)
 
@@ -150,20 +147,3 @@ You won't have to make specific configurations for each executable, the argument
 # Special Thanks
 
 SSUPII - Bug Fixes, testing and suggestions. https://github.com/SSUPII
-
-# Wine parser showcase
-
-https://github.com/Fabxx/LinuxGSG/assets/30447649/dd7a43d9-ba87-416d-b4fe-de14ffc36728
-
-# Emulator parser showcase (autoSort)
-
-https://github.com/Fabxx/LinuxGSG/assets/30447649/0bf8c882-6297-46b4-a93e-41b17c0ae639
-
-
-# Steam Rom Manager Integration showcase
-
-https://github.com/Fabxx/LinuxGSG/assets/30447649/47bbbafa-69f7-4d5d-a70c-1f0a95b97a13
-
-
-# Powershell script showcase (TODO)
-
