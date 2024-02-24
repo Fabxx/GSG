@@ -389,7 +389,7 @@ ZenityUI()
 	else
 	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
 	wineboot
-	winetricks -q vcrun2019 dxvk vkd3d dinput8
+	winetricks -q dxvk vkd3d
 	fi
 	fi
 
@@ -400,7 +400,7 @@ ZenityUI()
 	
 	zenity --info --text="Using default prefix, executing wineboot and winetricks commands"
 	wineboot
-	winetricks -q vcrun2019 dxvk vkd3d
+	winetricks -q dxvk vkd3d
 	
 	fi
 
