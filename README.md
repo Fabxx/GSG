@@ -14,9 +14,6 @@
 
 - If a game setup is missing in the `game setups.txt`, please create an issue with the appropriate labels.
   I will add the wine configuration and if available, the necessary DLL overrides in the script for the missing game.
-
-- If in the script there is a missing game that contains the main .exe in a subfolder, please report it and i will add it to the
-  local comparison in the script.
   
 - If emulator arguments are missing, please report them with a github issue, or contribute by adding them.
 
@@ -90,6 +87,8 @@ Rpcs3 (EBOOT.BIN)
 
 - The program can sort the rom files and cover images into folders for you if you haven't. More info in the option 5 of the Menu.
 
+NOTE: The linux script is case sensitive and looks specifically for `.EXE`, so rename your main executable extension like that.
+
 # How to use (Powershell file)
 
 open powershell as administrator and type: `Set-ExecutionPolicy Unrestricted` and approve the changes.
@@ -129,7 +128,7 @@ command line arguments: "${filePath}" (write this as it is!)
 
 User's glob [Linux users]: ${title}/start.sh (write this as it is!)
 
-User's glob [Windows users]: ${title}/*@(.exe)
+User's glob [Windows users]: ${title}/*@(.lnk)
 
 For portaits it is recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder
 not in subfolders.
@@ -137,7 +136,7 @@ not in subfolders.
 Local portraits image: /path/to/games/${title}/*@(.jpg)
 ```
 
-Detects all start.sh/.exe files, along with jpg covers (change the extension if you use another format)
+Detects all `start.sh/.lnk` files, along with jpg covers (change the extension if you use another format)
 
 You can duplicate this parser and change the category, title name and ROM's path since now everything uses a `sh` file as a base to run the games, emulators ecc,
 
