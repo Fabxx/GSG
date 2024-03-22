@@ -138,6 +138,12 @@ COD BLACK OPS 2
 
 ???
 
+COD BLACK OPS 3
+
+Install the game, install the boiii client, install steam on your system and run with proton experimental
+
+(also works with lastes P2P Repack, which alredy contains the boiii client)
+
 
 COD MODERN WARFARE 3
 
