@@ -271,6 +271,13 @@ Parser()
 			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 wineboot
 			WINEPREFIX="$tdu2Prefix" WINEARCH=win32 winetricks ie7 dotnet40 dxvk1103 dinput8 directplay
 			echo -n WINEPREFIX=\""$tdu2Prefix"\" WINEARCH=win32 wine \""$exeFile"\" >> start.sh
+		
+		elif [ "$(pwd)" == "$path_games/Assetto Corsa Competizione" ]; then
+			
+			accPrefix="/home/$(whoami)/accpfx"
+			WINEPREFIX="$accPrefix" wineboot
+			WINEPREFIX="$accPrefix" winetricks -q vcrun2019 dxvk
+			echo -n WINEPREFIX=\""$accPrefix"\" WINEARCH=win32 wine \""$exeFile"\" >> start.sh
 
 
 		else echo wine \""$exeFile"\" >> start.sh
