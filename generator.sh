@@ -277,7 +277,7 @@ Parser()
 			accPrefix="/home/$(whoami)/accpfx"
 			WINEPREFIX="$accPrefix" wineboot
 			WINEPREFIX="$accPrefix" winetricks -q vcrun2019 dxvk
-			echo -n WINEPREFIX=\""$accPrefix"\" WINEARCH=win32 wine \""$exeFile"\" >> start.sh
+			echo -n WINEPREFIX=\""$accPrefix"\" wine \""$exeFile"\" >> start.sh
 
 
 		else echo wine \""$exeFile"\" >> start.sh
