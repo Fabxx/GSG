@@ -76,7 +76,7 @@ SortRoms()
 		       *.rvz *.sav *.sbi *.sfc *.smc *.v64 *.wad *.wbfs *.wud *.wux *.xci *.z64 *.zar \
 			)
 
-	indexdirs=0 indexfiles=0 index=0
+	for i in "${files[@]%.*}"; do mkdir "$i"; done
 
 	subdirs=(*/)
 
@@ -84,6 +84,8 @@ SortRoms()
 	# Example: CTR is the folder, then CTR.bin CTR.cue CTR.jpg are the files.
 	# remove the extension one by one and if it matches CTR, move the file into the folder.
 	# After the last file, go to the next folder and find the matching names.
+
+	indexdirs=0 indexfiles=0
 
 	while [[ $indexfiles -lt ${#files[@]} ]]
 
