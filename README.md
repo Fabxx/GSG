@@ -65,15 +65,15 @@ Rpcs3 (EBOOT.BIN)
 
   Arch 	   	 `sudo pacman -S zenity wine winetricks`
 
-# Initial Setup for Linux
+# Initial Setup
 
-- (PC games only) First of all, setup your games by following the `Game Setups.txt` document.
+- (PC games only - Linux users) First of all, setup your games by following the `Game Setups.txt` document.
 
-- (PC Games only) the bash script looks for `.EXE`, rename the extension of your main exe tu run to .EXE 
+- the script looks for `.EXE`, rename the extension of your main exe tu run to .EXE 
 
-- If you need to auto sort, put all files and covers in the same folder. The files must have the same names.
+- (Linux only for now) If you need to auto sort, put all files and covers in the same folder. The files must have the same names.
 
-- Games that require specific prefix must have the same name folder as in the script to be detected. 
+- (Linux Only) Games that require specific prefix must have the same name folder as in the script to be detected. 
 
 # How to use (shell file)
 
