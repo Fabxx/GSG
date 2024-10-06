@@ -144,7 +144,7 @@ Parser()
 		;;
 
 		4) #rpcs3 JB format
-		echo -e \""$path_executable"\" "" "$rpcs3_args" \""$(ls PS3_GAME/USRDIR/EBOOT.BIN)"\" "\n" >> start.sh
+		echo -e \""$path_executable"\" "" "$rpcs3_args" \""$(find ~+ -name 'EBOOT.BIN')"\" "\n" >> start.sh
 		;;
 
 		esac
