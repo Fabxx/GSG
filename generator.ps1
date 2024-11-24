@@ -100,9 +100,9 @@ switch ($parserList) {
 @"
 1 Windows Executables
 "@
-	while (($parserID -lt 1) -or ($parserID -ge 1)) {
+	if ($parserList -eq 4) {
 			
-				[int]$parserID = Read-Host "Select a parser (1)"
+				$parserID = 1
 			}
 		}
 		
@@ -125,7 +125,7 @@ $path = Read-Host "Insert the absolute path of the games folder."
 
 # get all subdirs in folder.
 
-$subdirs = Get-ChildItem -Path $path -Directory
+$subdirs =  Get-ChildItem -Path $path -Directory | Select-Object -ExpandProperty Name
 
 
 # if user has not selected windows category, let him choose emulator executable
@@ -151,7 +151,8 @@ Function parser() {
 		
 				1 {
 					switch ($parserID) {
-			
+						
+					# NOTE: Working directory argument is optional. TargetPath and Arguments are what matters the most.
 					1 {
 						# Duckstation
 						 $game = $(Get-Item *.cue,*.iso,*.img,*.ecm,*.chd).FullName
@@ -334,26 +335,14 @@ Function parser() {
 					
 					1 {
 						# Windows .exe
-						$tmpExe = $(Get-Item *.exe).FullName
-						$exePath = $(Get-Item $tmpExe).Directory
-						$exeName = $(Get-Item $tmpExe).Basename
+						$tmpExe = Get-ChildItem -Path "$path\$folder" -File -Recurse | Where-Object { $_.Extension -ceq ".EXE" } | Select-Object -ExpandProperty FullName
+						$exeFolder = $tmpExe.DirectoryName
 						
-						if ( "$(pwd)" -eq "$path\Colin McRae Rally 2005" ) {
-							
-							$WshShell = New-Object -comObject WScript.Shell
-							$Shortcut = $WshShell.CreateShortcut("$path\$folder\$folder.lnk")
-							$Shortcut.TargetPath = $tmpExe
-							$Shortcut.Arguments = " `"$CMR2005`" "
-							$Shortcut.WorkingDirectory = $exePath
-							$Shortcut.Save()
-						} else {
-							$tmpExe = $(Get-Item *.exe).FullName
-							$WshShell = New-Object -comObject WScript.Shell
-							$Shortcut = $WshShell.CreateShortcut("$path\$folder\$folder.lnk")
-							$Shortcut.TargetPath = $tmpExe
-							$Shortcut.WorkingDirectory = $exePath
-							$Shortcut.Save()
-						}
+						$WshShell = New-Object -comObject WScript.Shell
+						$Shortcut = $WshShell.CreateShortcut("$path\$folder\$folder.lnk")
+						$Shortcut.TargetPath = "$tmpExe"
+						$Shortcut.WorkingDirectory = "$exeFolder"
+						$Shortcut.Save()	
 					}
 				
 				}
