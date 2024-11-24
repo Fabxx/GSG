@@ -97,12 +97,12 @@ then close and open again powershell as normal user
 
 execute  `.\generator.ps1`, a CLI interface has been provided to select the parsers.
 
-NOTE 1: do NOT write paths with double quotes in them.
+NOTE 1: do NOT write paths with double/single quotes in them.
 
 NOTE 2 (for XBMC users): on windows some applications can restart and change the PID name, and the ps1 script will fail to detect the pid of the launcher app
 and will open XBMC again. I can't do much about it. This is not the case for emulators
 
-NOTE 3: The script looks for `.exe | .EXE`, if you have multiple exes in the same folder, rename the extension of those that you don't need.
+NOTE 3: The script looks for `.EXE`, rename the extension of the exe to use in uppercase.
 
 
 # [Extra] Integrating with steam rom manager
