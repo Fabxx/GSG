@@ -1,113 +1,127 @@
 # Emulator Arguments 
 
 $xemu_args="-full-screen -dvd_path"
-$xenia_args="--gpu vulkan"
+#$xenia_args="--gpu vulkan"
 $pcsx2_args="-fullscreen"
 $mgba_args="-f"
 $dolphin_args="--config=Dolphin.Display.Fullscreen=True"
-$mupen_args="--fullscreen"
+#$mupen_args="--fullscreen"
 $cemu_args="-f -g"
 $rpcs3_args="--no-gui"
-
-# PC Games arguments
-
-$CMR2005="FORCEHT WIDESCREENDISPLAY NOVIDEO"
-
-$KINGDOMDEV="-devmode"
-
-$SCCT_SKIP_VIDEO="-nointro"
-
 
 # MAIN UI CODE
 
 Function interface() {
+
+	Clear-Host
 
 # force the while loop checks and XBMC check
 $parserList = 14
 
 $parserID = 14
 
-$isXbmcscript = -1
+Write-Host "Categories:" -ForegroundColor White
+Write-Host "1 Sony               Emulators" -ForegroundColor DarkCyan
+Write-Host "2 Nintendo           Emulators" -ForegroundColor DarkRed
+Write-Host "3 Microsoft          Emulators" -ForegroundColor Green
+Write-Host "4 PC Games           Windows .exe" -ForegroundColor DarkYellow
+Write-Host "5 Information        Show autoSort info" -ForegroundColor Gray
+Write-Host "0 Exit" -ForegroundColor White
 
-@"
-Categories:
-1 Sony  	 	Emulators 
-2 Nintendo 	 	Emulators
-3 Microsoft     Emulators
-4 PC Games   	Windows .exe
-5 Information   Show autoSort info
-0 Exit
-"@
 
-while (($parserList -lt 0) -or ($parserList -ge 5)) {
+while (($parserList -lt 0) -or ($parserList -gt 5)) {
 	
 	[int]$parserList = Read-Host "Select category of games (0-5)"
-}
 
-if ($parserList -eq 0) {
-	Exit
+	if ($parserList -eq 0) {
+		exit
+	}
 }
-
 
 switch ($parserList) {
 	
 1 {
-@"
-1)	Duckstation
-2)	Pcsx2
-3)	Ppsspp
-4)	Rpcs3
-"@
+	Clear-Host
 	
-		while (($parserID -lt 1) -or ($parserID -ge 4)) {
+	Write-Host "0)  Menu" -ForegroundColor White
+	Write-Host "1)  Duckstation" -ForegroundColor DarkYellow
+	Write-Host "2)  Pcsx2" -ForegroundColor DarkBlue
+	Write-Host "3)  Ppsspp" -ForegroundColor DarkCyan
+	Write-Host "4)  Rpcs3" -ForegroundColor DarkMagenta
+	
 		
-			[int]$parserID = Read-Host "Select a parser (1-4)"
+
+		while (($parserID -lt 0) -or ($parserID -gt 4)) {
+		
+			[int]$parserID = Read-Host "Select an option (0-4)"
+
+			if ($parserID -eq 0) {
+				interface
+			}
 		}
 	
 	}
 	
 2 {
-@"
-1 Citra   	   Nintendo 3DS Emulator
-2 melonDS 	   Nintendo DS Emulator
-3 Yuzu/Ryujinx 	   Nintendo Switch Emulator
-4 mGBA    	   Gameboy Advance Emulator
-5 mupen64	   Nintendo 64 Emulator
-6 snes9x	   Super nintendo emulator
-7 Cemu		   Nintendo Wii U emulator
-8 dolphin          Nintendo Wii/Gamecube emulator
-"@
+	Clear-Host
+	
+	Write-Host "0 Menu" -ForegroundColor White
+	Write-Host "1 Citra          Nintendo 3DS Emulator" -ForegroundColor Yellow
+	Write-Host "2 melonDS        Nintendo DS Emulator" -ForegroundColor Green
+	Write-Host "3 Yuzu/Ryujinx   Nintendo Switch Emulator" -ForegroundColor DarkRed
+	Write-Host "4 mGBA           Gameboy Advance Emulator" -ForegroundColor Magenta
+	Write-Host "5 mupen64        Nintendo 64 Emulator" -ForegroundColor DarkGray
+	Write-Host "6 snes9x         Super Nintendo Emulator" -ForegroundColor DarkRed
+	Write-Host "7 Cemu           Nintendo Wii U Emulator" -ForegroundColor DarkCyan
+	Write-Host "8 dolphin        Nintendo Wii/Gamecube Emulator" -ForegroundColor DarkMagenta
+	
 
-	while (($parserID -lt 1) -or ($parserID -ge 8)) {
+	while (($parserID -lt 0) -or ($parserID -gt 8)) {
 		
-			[int]$parserID = Read-Host "Select a parser (1-8)"
+			[int]$parserID = Read-Host "Select an option (0-8)"
+
+			if ($parserID -eq 0) {
+				interface
+			}
 		}
 	}
 	
 3 {
-@"
-1 Xemu    	   Original Xbox Emulator
-2 Xenia   	   Xbox 360 Emulator
-3 Cxbx-r	   Original Xbox Emulator
-"@
-	while (($parserID -lt 1) -or ($parserID -ge 3)) {
+	Clear-Host
+	Write-Host "0 Menu" -ForegroundColor White
+	Write-Host "1 Xemu           Original Xbox Emulator" -ForegroundColor DarkGreen
+	Write-Host "2 Xenia          Xbox 360 Emulator" -ForegroundColor Green
+	Write-Host "3 Cxbx-r         Original Xbox Emulator" -ForegroundColor DarkYellow
+	
+
+	while (($parserID -lt 0) -or ($parserID -gt 3)) {
 			
-				[int]$parserID = Read-Host "Select a parser (1-3)"
+				[int]$parserID = Read-Host "Select an option (0-3)"
+			}
+
+			if ($parserID -eq 0) {
+				interface
 			}
 	}
 	
 4 {
-@"
-1 Windows Executables
-"@
-	if ($parserList -eq 4) {
-			
-				$parserID = 1
+	Clear-Host
+	Write-Host "0 Menu" -ForegroundColor White
+	Write-Host "1 Windows Executables" -ForegroundColor DarkCyan
+	
+	
+		while (($parserID -lt 0) -or ($parserID -gt 1)) {
+					
+			[int]$parserID = Read-Host "Select an option (0-1)"
+
+			if ($parserID -eq 0) {
+				interface
 			}
 		}
-		
-	}
+	  }
+	}	
 
+$isXbmcscript = -1
 
 while ( ($isXbmcscript -ne 1) -and ($isXbmcscript -ne 0) ) {
 	
@@ -135,17 +149,14 @@ if ($parserList -ne 4) {
 		$emulator = Read-Host "Put absolute path of emulator executable, with also the .exe name and extension"
 		$emuPath = $(Get-Item $emulator).DirectoryName
 	}
-	
 	parser
 }
-
-
 
 Function parser() {
 	
 	foreach ($folder in $subdirs) {
 
-	 cd $path\$folder
+	 Set-Location $path\$folder
 		
 			switch ($parserList) {
 		
@@ -188,7 +199,7 @@ Function parser() {
 					
 					4 {
 						# RPCS3
-						 $childItem = $(Get-ChildItem -Recurse -Name | where {$_ -clike "*EBOOT.BIN"} -ErrorAction 'SilentlyContinue'  )
+						 $childItem = $(Get-ChildItem -Recurse -Name | Where-Object {$_ -clike "*EBOOT.BIN"} -ErrorAction 'SilentlyContinue'  )
 						 $game = $(Get-Item $ChildItem).FullName
 						 $WshShell = New-Object -comObject WScript.Shell
 						 $Shortcut = $WshShell.CreateShortcut("$path\$folder\$folder.lnk")
@@ -353,9 +364,13 @@ Function parser() {
 			xbmcScriptGen
 		}
 
-		echo $(pwd)
-		cd ..
+		Write-Output $(Get-Location)
+		Set-Location ..
 	}
+
+	Write-Host "Scan Complete! Returning to main menu."
+	Start-Sleep 3
+	interface
 }
 
 Function xbmcScriptGen() {
