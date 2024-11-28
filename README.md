@@ -112,23 +112,23 @@ parser setup:
 ```
 Parser type: glob
 
-Config title: put name here
+Parser title: put name here
 
-Steam directory: usually /home/user/.steam/root
+Steam directory: usually /home/user/.steam/root or ${steamdirglobal} if on windows
 
-User Accounts: ${Steam Username}
-
-Steam category: Category name
+User Accounts: select account from the new interface
 
 ROMs directory: /path/to/your/games
 
-Executable: /usr/bin/bash
+Steam collections: collection name
 
-command line arguments: "${filePath}" (write this as it is!)
+Executable: /usr/bin/bash if on linux, none if on windows
 
-User's glob [Linux users]: ${title}/start.sh (write this as it is!)
+command line arguments: "${filePath}" if on linux (write this as it is!)
 
-User's glob [Windows users]: ${title}/*@(.lnk)
+search glob [Linux users]: ${title}/start.sh (write this as it is!)
+
+search glob [Windows users]: ${title}/*@(.lnk)
 
 For portaits it is recommended to use a 500x700 image with an extension you want, each cover must be put in the main game folder
 not in subfolders.
