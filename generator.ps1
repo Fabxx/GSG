@@ -312,7 +312,7 @@ Function parser() {
 						 $WshShell = New-Object -comObject WScript.Shell
 						 $Shortcut = $WshShell.CreateShortcut("$path\$folder\$folder.lnk")
 						 $Shortcut.TargetPath = $emulator
-						 $Shortcut.Arguments = " `"$xemu_args`"`"$game`" "
+						 $Shortcut.Arguments = " `"$xemu_args`" `"$game`" "
 						 $Shortcut.WorkingDirectory = $emuPath
 						 $Shortcut.Save()
 					}
